@@ -7,11 +7,16 @@ permission to read this. if not, fuck off :)
 Copyright (c) IsGeorgeCurious 2020
 */
 
+import de.dytanic.cloudnet.driver.service.ServiceConfiguration;
+import de.dytanic.cloudnet.driver.service.ServiceId;
+import de.dytanic.cloudnet.wrapper.Wrapper;
 import me.cps.root.account.AccountHub;
 import me.cps.root.chat.ChatHub;
 import me.cps.root.command.CommandHub;
+import me.cps.root.redis.RedisHub;
 import me.cps.root.test.TestMod2;
 import me.cps.root.test.TestModule;
+import me.cps.root.util.Message;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -29,6 +34,7 @@ public class Root extends JavaPlugin {
         //this just shows how to initialize cps modules
         // !!! ALWAYS INITIALIZE COMMAND HUB FIRST !!! - else it will nullpointerexception if you try to register a command.
         CommandHub commandHub = new CommandHub(this);
+        RedisHub redisHub = new RedisHub(this, null, Rank.DEFAULT, 100, false, false);
         AccountHub accountHub = new AccountHub(this, "ssh.centurion.pw", "cps", "L2ZBcOxTQEvvz8zW", "cps", 3306);
         ChatHub chatHub = new ChatHub(this);
 
@@ -45,10 +51,15 @@ public class Root extends JavaPlugin {
                 t = t + modulesEnabled.get(i).getModuleName() + ", ";
         }
         getLogger().info(t);
+
+        ServiceId serviceId = Wrapper.getInstance().getServiceId();
+
+        Message.console(serviceId.getName() + " " + serviceId.getTaskName());
     }
 
     @Override
     public void onDisable() {
+        RedisHub.getInstance().deInitServer(); //removes the server from the online servers list.
         getLogger().info("ded"); //there is honestly no point to this
     }
 

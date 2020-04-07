@@ -10,7 +10,9 @@ Copyright (c) IsGeorgeCurious 2020
 import me.cps.root.Rank;
 import me.cps.root.account.commands.SetRankCommand;
 import me.cps.root.cpsModule;
+import me.cps.root.redis.RedisHub;
 import me.cps.root.util.Message;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -48,7 +50,7 @@ public class AccountHub extends cpsModule {
     private int port;
 
     public AccountHub(JavaPlugin plugin, String h, String u, String pw, String db, int p) {
-        super("Account Hub", plugin, "1.0", true);
+        super("Account Hub", plugin, "1.0.1", true);
         this.host = h;
         this.username = u;
         this.password = pw;
@@ -221,6 +223,13 @@ public class AccountHub extends cpsModule {
             return;
         }
 
+        if (getPlugin().getServer().getOnlinePlayers().size() >= RedisHub.getInstance().maxPlayers) {
+            if (!RedisHub.getInstance().donatorPriority) {
+                event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_FULL, "\n\n§b§lCPS§r\n§cThis server is full. Please try again later.");
+                return;
+            }
+        }
+
         if (playerExists(event.getUniqueId())) {
             int result = loadPlayer(event.getUniqueId());
             if (result == 0) {
@@ -236,6 +245,13 @@ public class AccountHub extends cpsModule {
                 loadPlayer(event.getUniqueId());
             }
         }
+
+        if (!Rank.hasRank(event.getUniqueId(), RedisHub.getInstance().rankRequired)) {
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n\n§b§lCPS§r\n§cYou don't have the required rank to join this server!§r\n§fYou need " + RedisHub.getInstance().rankRequired.getPrefix() + "§fto join.");
+            getPlayers().remove(event.getUniqueId());
+            return;
+        }
+
         getPlugin().getLogger().info("Added player " + event.getName() + " to the rank cache.");
     }
 

@@ -19,6 +19,7 @@ public enum Rank {
 
     FAMOUS("Famous", ChatColor.LIGHT_PURPLE, "[FAMOUS]", true),
 
+    DONATORPLUS("Donator+", ChatColor.DARK_AQUA, "[DONATOR+]", false),
     DONATOR("Donator", ChatColor.GOLD, "[DONATOR]", false),
 
     DEFAULT("Default", ChatColor.GRAY, "", false);
@@ -81,8 +82,10 @@ public enum Rank {
                 return "7";
             case FAMOUS:
                 return "A";
-            case DONATOR:
+            case DONATORPLUS:
                 return "B";
+            case DONATOR:
+                return "C";
             case DEFAULT:
                 return "Z";
             default:
