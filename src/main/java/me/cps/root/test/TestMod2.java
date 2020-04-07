@@ -13,6 +13,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class TestMod2 extends cpsModule {
 
     public TestMod2(JavaPlugin plugin) {
-        super("Yeetus", plugin, false);
+        super("Yeetus", plugin, "1.0-alpha", false);
     }
 }

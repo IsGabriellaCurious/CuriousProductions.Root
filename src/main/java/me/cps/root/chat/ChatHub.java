@@ -8,7 +8,6 @@ Copyright (c) IsGeorgeCurious 2020
 */
 
 import me.cps.root.Rank;
-import me.cps.root.chat.commands.GlobalPrefixCommand;
 import me.cps.root.cpsModule;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,7 +21,7 @@ public class ChatHub extends cpsModule {
     private ChatHub instance;
 
     public ChatHub(JavaPlugin plugin) {
-        super("Chat Hub", plugin, false);
+        super("Chat Hub", plugin, "1.0-beta", false);
         instance = this;
         registerSelf();
         //globalPrefix = Rank.DEFAULT;

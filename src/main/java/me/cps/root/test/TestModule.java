@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class TestModule extends cpsModule {
 
     public TestModule(JavaPlugin plugin) {
-        super("Test", plugin, false);
+        super("Test", plugin, "1.0-alpha", false);
     }
 
 }

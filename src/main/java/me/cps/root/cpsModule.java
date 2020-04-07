@@ -9,6 +9,7 @@ Copyright (c) IsGeorgeCurious 2020
 
 import me.cps.root.command.CommandHub;
 import me.cps.root.command.cpsCommand;
+import me.cps.root.util.Message;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,15 +18,17 @@ public abstract class cpsModule implements Listener {
     String moduleName = "NOT SET"; //name of the module (for example what will be found in the /listmodules command
     JavaPlugin plugin; // easy access to the main class's shit and everything inbetween.
     Boolean core; //TODO actually make it so you can disable non-core modules
+    String version = "0";
 
-    public cpsModule(String name, JavaPlugin plugin, Boolean core) {
+    public cpsModule(String name, JavaPlugin plugin, String version, Boolean core) {
         this.moduleName = name;
         this.plugin = plugin;
+        this.version = version;
         this.core = core;
         if (core)
-            plugin.getServer().getConsoleSender().sendMessage("§a**CORE** Module " + name + " is being loaded...");
+            Message.console("§a**CORE** Module " + name + " §dv" + version + " §ais being loaded...");
         else
-            plugin.getServer().getConsoleSender().sendMessage("§bModule " + name + " is being loaded...");
+            Message.console("§bModule " + name + " §dv" + version + " §ais being loaded...");
         Root.getModulesEnabled().add(this);
     }
 

@@ -19,14 +19,17 @@ import java.util.ArrayList;
 public class Root extends JavaPlugin {
 
     private static ArrayList<cpsModule> modulesEnabled;
+    private static Root instance;
 
     @Override
     public void onEnable() {
+        instance = this;
         modulesEnabled = new ArrayList<>();
 
         //this just shows how to initialize cps modules
-        AccountHub accountHub = new AccountHub(this, "ssh.centurion.pw", "cps", "L2ZBcOxTQEvvz8zW", "cps", 3306);
+        // !!! ALWAYS INITIALIZE COMMAND HUB FIRST !!! - else it will nullpointerexception if you try to register a command.
         CommandHub commandHub = new CommandHub(this);
+        AccountHub accountHub = new AccountHub(this, "ssh.centurion.pw", "cps", "L2ZBcOxTQEvvz8zW", "cps", 3306);
         ChatHub chatHub = new ChatHub(this);
 
         TestModule testModule = new TestModule(this);
@@ -51,5 +54,9 @@ public class Root extends JavaPlugin {
 
     public static ArrayList<cpsModule> getModulesEnabled() { //so it can be accessed by other classes. used mainly by cpsModule
         return modulesEnabled;
+    }
+
+    public static Root getInstance() {
+        return instance;
     }
 }

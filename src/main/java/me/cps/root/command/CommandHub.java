@@ -9,8 +9,8 @@ Copyright (c) IsGeorgeCurious 2020
 
 import me.cps.root.Rank;
 import me.cps.root.command.commands.ModulesEnabledCommand;
-import me.cps.root.command.commands.TestCommand;
 import me.cps.root.cpsModule;
+import me.cps.root.util.Message;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,7 +27,7 @@ public class CommandHub extends cpsModule {
     private List<String> illegalCommands = Arrays.asList("plugins", "pl", "ver", "version", "me", "minecraft:me"); //a list of commands that people below developer can't use.
 
     public CommandHub(JavaPlugin plugin) {
-        super("Command Hub", plugin, true);
+        super("Command Hub", plugin, "1.0",true);
 
         registeredCommands = new HashMap<>();
         registerSelf();
@@ -46,10 +46,10 @@ public class CommandHub extends cpsModule {
 
     public void registerCommand(cpsCommand command) { //basically puts a command into the registeredCommands (mostly used in cpsModule class)
         registeredCommands.put(command.getCommand(), command);
-        getPlugin().getServer().getConsoleSender().sendMessage("§fRegistered command " + command.getCommand());
+        Message.console("§fRegistered command " + command.getCommand());
         for (Object al : command.getAliases()) {
             registeredCommands.put(al.toString(), command);
-            getPlugin().getServer().getConsoleSender().sendMessage("§fRegistered alias " + al + " [" + command.getCommand() + "]");
+            Message.console("§fRegistered alias " + al + " [" + command.getCommand() + "]");
         }
     }
 
@@ -72,7 +72,10 @@ public class CommandHub extends cpsModule {
             event.setCancelled(true); //MAKE SURE TO CANCEL!!!!!
             cpsCommand command = registeredCommands.get(requestedCommand);
             if (!Rank.hasRank(event.getPlayer().getUniqueId(), command.getRankRequired())) { //permission check
-                event.getPlayer().sendMessage("§cError! You do not have permission to run this command.");
+                if (Rank.hasRank(event.getPlayer().getUniqueId(), Rank.HELPER)) //just makes more sense for staff to know, i guess.
+                    event.getPlayer().sendMessage("§cError! You need the rank " + command.getRankRequired().getPrefix() + "§cto run this.");
+                else
+                    event.getPlayer().sendMessage("§cError! You don't have permission to use this.");
                 return;
             }
             command.execute(event.getPlayer(), args); //runs the abstract void from cpsCommand.

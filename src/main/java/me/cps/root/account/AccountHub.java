@@ -8,7 +8,9 @@ Copyright (c) IsGeorgeCurious 2020
 */
 
 import me.cps.root.Rank;
+import me.cps.root.account.commands.SetRankCommand;
 import me.cps.root.cpsModule;
+import me.cps.root.util.Message;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -24,7 +26,7 @@ public class AccountHub extends cpsModule {
     /*
     Notes to self:
     execute query is for select statements
-    execute update is for insert statements
+    execute update is for insert, update statements
 
     when returning:
     1 - success
@@ -32,7 +34,7 @@ public class AccountHub extends cpsModule {
      */
 
     private HashMap<UUID, Rank> players; //basically the rank cache so i don't have the bother mysql for every chat message, etc.
-    private static AccountHub instance; //instace of this
+    private static AccountHub instance; //instance of this
 
     public boolean nullBoolean; //basically a return null during the player exists check if there is an error
     public boolean serverLockdown = false; //a pointless security precaution. if you we can't connect to mysql, the server doesn't allow ANYONE into itself.
@@ -46,7 +48,7 @@ public class AccountHub extends cpsModule {
     private int port;
 
     public AccountHub(JavaPlugin plugin, String h, String u, String pw, String db, int p) {
-        super("Account Hub", plugin, true);
+        super("Account Hub", plugin, "1.0", true);
         this.host = h;
         this.username = u;
         this.password = pw;
@@ -57,21 +59,23 @@ public class AccountHub extends cpsModule {
         instance = this;
 
         int result = -1;
-        plugin.getServer().getConsoleSender().sendMessage("§eAs a security measure, we are testing the SQL connection...");
+        Message.console("§eAs a security measure, we are testing the SQL connection...");
         //a very basic check using try-catch. it tries to open a connection, if it fails it goes to the catch and locks the server down. else, it closes the connection and continues.
         try {
             openConnection();
 
             result = 1;
             connection.close();
-            plugin.getServer().getConsoleSender().sendMessage("§aTest successful! Connection is closed and we are good to go.");
+            Message.console("§aTest successful! Connection is closed and we are good to go.");
         } catch (Exception e) {
-            plugin.getServer().getConsoleSender().sendMessage("§cERROR! Server is entering lockdown. See stack below...");
+            Message.console("§cERROR! Server is entering lockdown. See stack below...");
             e.printStackTrace();
             setLockdown(true);
             result = 0;
         }
         plugin.getLogger().info("Result " + result); //1 - success, 0 - failed, -1 - fuck knows what happened.
+
+        registerCommand(new SetRankCommand(this));
     }
 
     public Connection getConnection() {
@@ -103,7 +107,6 @@ public class AccountHub extends cpsModule {
     //now for all the mysql crap. most of it is pretty self-explanitory so i won't bother explain most of it.
 
     public void openConnection() throws SQLException, ClassNotFoundException {
-        getPlugin().getLogger().info("Opening connection!");
         if (connection != null && ! connection.isClosed()) {
             return;
         }
@@ -122,7 +125,7 @@ public class AccountHub extends cpsModule {
         try {
             openConnection();
 
-            getPlugin().getServer().getConsoleSender().sendMessage("§aCreating player with UUID §c" + uuid.toString());
+            Message.console("§aCreating player with UUID §c" + uuid.toString());
             PreparedStatement statement = getConnection().prepareStatement("INSERT INTO `account` (uuid, rank) VALUE (?, ?)");
             statement.setString(1, uuid.toString());
             statement.setString(2, Rank.DEFAULT.toString());
@@ -130,10 +133,10 @@ public class AccountHub extends cpsModule {
             statement.executeUpdate();
             connection.close();
 
-            getPlugin().getServer().getConsoleSender().sendMessage("§aSuccess!");
+            Message.console("§aSuccess!");
             return 1;
         } catch (Exception e) {
-            getPlugin().getServer().getConsoleSender().sendMessage("§cError! See stack below...");
+            Message.console("§cError! See stack below...");
             e.printStackTrace();
             return 0;
         }
@@ -143,7 +146,7 @@ public class AccountHub extends cpsModule {
         try {
             openConnection();
 
-            getPlugin().getServer().getConsoleSender().sendMessage("§aLoading player with UUID §c" + uuid.toString());
+            Message.console("§aLoading player with UUID §c" + uuid.toString());
             PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM `account` WHERE uuid=?");
             statement.setString(1, uuid.toString());
             statement.executeQuery();
@@ -156,15 +159,15 @@ public class AccountHub extends cpsModule {
                 rank = Rank.valueOf(resultSet.getString("rank"));
                 getPlayers().put(uuid, rank);
                 connection.close();
-                getPlugin().getServer().getConsoleSender().sendMessage("§aSuccess!");
+                Message.console("§aSuccess!");
                 return 1;
             } else {
                 connection.close();
-                getPlugin().getServer().getConsoleSender().sendMessage("§cError! Result set empty!");
+                Message.console("§cError! Result set empty!");
                 return 0;
             }
         } catch (Exception e) {
-            getPlugin().getServer().getConsoleSender().sendMessage("§cError! See stack below...");
+            Message.console("§cError! See stack below...");
             e.printStackTrace();
             return 0;
         }
@@ -183,6 +186,28 @@ public class AccountHub extends cpsModule {
         } catch (Exception e) {
             e.printStackTrace();
             return nullBoolean;
+        }
+    }
+
+    public int updateRank(UUID uuid, Rank rank) {
+        try {
+            Message.console("§aPreparing to update " + uuid.toString() + "'s rank to " + rank.toString());
+            openConnection();
+
+            PreparedStatement statement = getConnection().prepareStatement("UPDATE `account` SET rank=? WHERE uuid=?");
+            statement.setString(1, rank.toString());
+            statement.setString(2, uuid.toString());
+
+            Message.console("§aUpdating...");
+            statement.executeUpdate();
+
+            connection.close();
+            Message.console("§aSuccess!");
+            return 1;
+        } catch (Exception e) {
+            Message.console("§cError! See stack trace below...");
+            e.printStackTrace();
+            return 0;
         }
     }
 
