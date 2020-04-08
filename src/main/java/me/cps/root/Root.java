@@ -36,6 +36,7 @@ public class Root extends JavaPlugin {
         CommandHub commandHub = new CommandHub(this);
         RedisHub redisHub = new RedisHub(this, null, Rank.DEFAULT, 100, false, false);
         AccountHub accountHub = new AccountHub(this, "ssh.centurion.pw", "cps", "L2ZBcOxTQEvvz8zW", "cps", 3306);
+        ProxyManager proxyManager = new ProxyManager(this)
         ChatHub chatHub = new ChatHub(this);
 
         TestModule testModule = new TestModule(this);
