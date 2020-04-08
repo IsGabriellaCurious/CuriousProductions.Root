@@ -7,12 +7,17 @@ permission to read this. if not, fuck off :)
 Copyright (c) IsGeorgeCurious 2020
 */
 
-import me.cps.root.Root;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 public class Message {
 
     public static void console(String message) {
-        Root.getInstance().getServer().getConsoleSender().sendMessage(message);
+        Bukkit.getServer().getConsoleSender().sendMessage(message);
+    }
+
+    public static void broadcast(String message) {
+        Bukkit.getServer().broadcastMessage(message);
     }
 
 }

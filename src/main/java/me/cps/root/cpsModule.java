@@ -29,7 +29,7 @@ public abstract class cpsModule implements Listener {
             Message.console("§a**CORE** Module " + name + " §dv" + version + " §ais being loaded...");
         else
             Message.console("§bModule " + name + " §dv" + version + " §ais being loaded...");
-        Root.getModulesEnabled().add(this);
+        //Root.getModulesEnabled().add(this);
     }
 
 

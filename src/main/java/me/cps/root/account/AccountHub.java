@@ -175,6 +175,26 @@ public class AccountHub extends cpsModule {
         }
     }
 
+    public Rank forceGetRank(UUID uuid) {
+        try {
+            openConnection();
+
+            PreparedStatement statement = getConnection().prepareStatement("SELECT `rank` FROM `account` WHERE uuid=?");
+            statement.setString(1, uuid.toString());
+            statement.executeQuery();
+
+            ResultSet resultSet = statement.getResultSet();
+
+            if (resultSet.next())
+                return Rank.valueOf(resultSet.getString("rank"));
+            else
+                return Rank.DEFAULT;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Rank.DEFAULT;
+        }
+    }
+
     public boolean playerExists(UUID uuid) {
         try {
             openConnection();

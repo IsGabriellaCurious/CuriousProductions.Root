@@ -8,7 +8,6 @@ Copyright (c) IsGeorgeCurious 2020
 */
 
 import me.cps.root.Rank;
-import me.cps.root.Root;
 import me.cps.root.command.CommandHub;
 import me.cps.root.command.cpsCommand;
 import me.cps.root.cpsModule;
@@ -25,7 +24,7 @@ public class ModulesEnabledCommand extends cpsCommand<CommandHub> {
 
     @Override
     public void execute(Player caller, String[] args) {
-        ArrayList<cpsModule> modulesEnabled = Root.getModulesEnabled();
+        /*ArrayList<cpsModule> modulesEnabled = Root.getModulesEnabled();
         String t = "" + ChatColor.GREEN + "Active modules are: ";
         for (int i = 0; i < modulesEnabled.size(); i++) { //again, probably not a good way of doing this, but hell it works.
             if (i == modulesEnabled.size()-1)
@@ -41,5 +40,7 @@ public class ModulesEnabledCommand extends cpsCommand<CommandHub> {
         }
         caller.sendMessage(t);
         caller.sendMessage("" + ChatColor.DARK_GRAY + "" + ChatColor.ITALIC + "Modules with a * are Core and cannot be disabled.");
+        */
+
     }
 }
