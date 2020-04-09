@@ -185,10 +185,15 @@ public class AccountHub extends cpsModule {
 
             ResultSet resultSet = statement.getResultSet();
 
+            Rank r = null;
             if (resultSet.next())
-                return Rank.valueOf(resultSet.getString("rank"));
+                r = Rank.valueOf(resultSet.getString("rank"));
             else
-                return Rank.DEFAULT;
+                r = Rank.DEFAULT;
+
+            connection.close();
+            return r;
+
         } catch (Exception e) {
             e.printStackTrace();
             return Rank.DEFAULT;
