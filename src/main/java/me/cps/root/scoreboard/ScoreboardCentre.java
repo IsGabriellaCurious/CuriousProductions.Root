@@ -25,7 +25,7 @@ public class ScoreboardCentre extends cpsModule {
     private HashMap<Player, cpsScoreboard> scoreboards = new HashMap<>();
 
     public ScoreboardCentre(JavaPlugin plugin) {
-        super("Scoreboard Centre", plugin, "1.0-alpha", true);
+        super("Scoreboard Centre", plugin, "1.2", true);
         instance = this;
         registerSelf();
     }
