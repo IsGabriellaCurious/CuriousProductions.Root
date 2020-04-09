@@ -11,6 +11,7 @@ import me.cps.root.Rank;
 import me.cps.root.command.commands.ModulesEnabledCommand;
 import me.cps.root.cpsModule;
 import me.cps.root.util.Message;
+import me.cps.root.util.PerMilliRunnable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,6 +29,8 @@ public class CommandHub extends cpsModule {
 
     public CommandHub(JavaPlugin plugin) {
         super("Command Hub", plugin, "1.0",true);
+
+        plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new PerMilliRunnable(plugin), 0, 1);
 
         registeredCommands = new HashMap<>();
         registerSelf();
