@@ -31,7 +31,7 @@ public class cpsScoreboard {
     private ArrayList<String> beforeNew = new ArrayList<>(); //a cache, bascially.
     private ArrayList<String> toChange = new ArrayList<>(); //line to change
 
-    public String title = "§b§lCPS";
+    public String title = "§b§lCPS"; //default title
     //these 2 should probably never used as colours n stuff should be in the title string with §
     public ChatColor titleColour = ChatColor.AQUA;
     public boolean boldTitle = true;
@@ -71,6 +71,21 @@ public class cpsScoreboard {
 
     public void apply() {
         objective.setDisplayName(title);
+
+        //this makes spacing possible
+        int currentSpace = 1;
+
+        for (int i=0; i<scores.size(); i++) {
+            if (scores.get(i).equalsIgnoreCase(" ")) {
+                String old = scores.get(i);
+                String newS = scores.get(i);
+                for (int ii=0; ii<currentSpace; ii++) {
+                    newS = newS + " ";
+                }
+                currentSpace++;
+                scores.set(i, newS);
+            }
+        }
 
         if (!beforeNew.isEmpty()) {
             for (int i=0; i<scores.size(); i++) {
