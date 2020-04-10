@@ -24,23 +24,23 @@ public class ModulesEnabledCommand extends cpsCommand<CommandHub> {
 
     @Override
     public void execute(Player caller, String[] args) {
-        /*ArrayList<cpsModule> modulesEnabled = Root.getModulesEnabled();
+        ArrayList<cpsModule> modulesEnabled = CommandHub.modulesEnabled;
         String t = "" + ChatColor.GREEN + "Active modules are: ";
         for (int i = 0; i < modulesEnabled.size(); i++) { //again, probably not a good way of doing this, but hell it works.
             if (i == modulesEnabled.size()-1)
                 if (modulesEnabled.get(i).isCore())
-                    t = t  + ChatColor.RED + "*" + modulesEnabled.get(i).getModuleName();
+                    t = t  + ChatColor.RED + "*" + modulesEnabled.get(i).getModuleName() + " v" + modulesEnabled.get(i).getVersion();
                 else
-                    t = t + ChatColor.RED + modulesEnabled.get(i).getModuleName();
+                    t = t + ChatColor.RED + modulesEnabled.get(i).getModuleName() + " v" + modulesEnabled.get(i).getVersion();
             else
                 if (modulesEnabled.get(i).isCore())
-                    t = t + ChatColor.RED + "*" + modulesEnabled.get(i).getModuleName() + ChatColor.GREEN + ", ";
+                    t = t + ChatColor.RED + "*" + modulesEnabled.get(i).getModuleName() + " v" + modulesEnabled.get(i).getVersion() + ChatColor.GREEN + ", ";
                 else
-                    t = t + ChatColor.RED + modulesEnabled.get(i).getModuleName() + ChatColor.GREEN + ", ";
+                    t = t + ChatColor.RED + modulesEnabled.get(i).getModuleName() + " v" + modulesEnabled.get(i).getVersion() + ChatColor.GREEN + ", ";
         }
         caller.sendMessage(t);
         caller.sendMessage("" + ChatColor.DARK_GRAY + "" + ChatColor.ITALIC + "Modules with a * are Core and cannot be disabled.");
-        */
+
 
     }
 }

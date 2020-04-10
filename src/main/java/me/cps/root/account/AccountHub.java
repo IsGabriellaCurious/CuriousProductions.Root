@@ -42,7 +42,7 @@ public class AccountHub extends cpsModule {
     public boolean serverLockdown = false; //a pointless security precaution. if you we can't connect to mysql, the server doesn't allow ANYONE into itself.
 
     //mysql's connection info
-    private Connection connection;
+    //private Connection connection;
     private String host;
     private String username;
     private String password;
@@ -50,7 +50,7 @@ public class AccountHub extends cpsModule {
     private int port;
 
     public AccountHub(JavaPlugin plugin, String h, String u, String pw, String db, int p) {
-        super("Account Hub", plugin, "1.0.1", true);
+        super("Account Hub", plugin, "1.2", true);
         this.host = h;
         this.username = u;
         this.password = pw;
@@ -64,10 +64,10 @@ public class AccountHub extends cpsModule {
         Message.console("§eAs a security measure, we are testing the SQL connection...");
         //a very basic check using try-catch. it tries to open a connection, if it fails it goes to the catch and locks the server down. else, it closes the connection and continues.
         try {
-            openConnection();
+            Connection conn = createConnection();
 
             result = 1;
-            connection.close();
+            conn.close();
             Message.console("§aTest successful! Connection is closed and we are good to go.");
         } catch (Exception e) {
             Message.console("§cERROR! Server is entering lockdown. See stack below...");
@@ -78,10 +78,6 @@ public class AccountHub extends cpsModule {
         plugin.getLogger().info("Result " + result); //1 - success, 0 - failed, -1 - fuck knows what happened.
 
         registerCommand(new SetRankCommand(this));
-    }
-
-    public Connection getConnection() {
-        return connection;
     }
 
     public static AccountHub getInstance() {
@@ -108,27 +104,22 @@ public class AccountHub extends cpsModule {
 
     //now for all the mysql crap. most of it is pretty self-explanitory so i won't bother explain most of it.
 
-    public void openConnection() throws SQLException, ClassNotFoundException {
-        if (connection != null && ! connection.isClosed()) {
-            return;
-        }
+    public Connection createConnection() throws SQLException, ClassNotFoundException {
 
         synchronized (this) {
-            if (connection != null && !connection.isClosed()) {
-                return;
-            }
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.username, this.password); //connection url
+            Connection conn = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.username, this.password); //connection url
+            return conn;
         }
     }
 
     //the reason this and loadPlayer uses integers as results and during the login checks, it can disallow the player to join if there was an error. (this is so nothing else breaks as they won't be in any caches)
     public int createPlayer(UUID uuid) {
         try {
-            openConnection();
+            Connection connection = createConnection();
 
             Message.console("§aCreating player with UUID §c" + uuid.toString());
-            PreparedStatement statement = getConnection().prepareStatement("INSERT INTO `account` (uuid, rank) VALUE (?, ?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO `account` (uuid, rank) VALUE (?, ?)");
             statement.setString(1, uuid.toString());
             statement.setString(2, Rank.DEFAULT.toString());
 
@@ -146,10 +137,10 @@ public class AccountHub extends cpsModule {
 
     public int loadPlayer(UUID uuid) {
         try {
-            openConnection();
+            Connection connection = createConnection();
 
             Message.console("§aLoading player with UUID §c" + uuid.toString());
-            PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM `account` WHERE uuid=?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `account` WHERE uuid=?");
             statement.setString(1, uuid.toString());
             statement.executeQuery();
 
@@ -177,9 +168,9 @@ public class AccountHub extends cpsModule {
 
     public Rank forceGetRank(UUID uuid) {
         try {
-            openConnection();
+            Connection connection = createConnection();
 
-            PreparedStatement statement = getConnection().prepareStatement("SELECT `rank` FROM `account` WHERE uuid=?");
+            PreparedStatement statement = connection.prepareStatement("SELECT `rank` FROM `account` WHERE uuid=?");
             statement.setString(1, uuid.toString());
             statement.executeQuery();
 
@@ -202,9 +193,9 @@ public class AccountHub extends cpsModule {
 
     public boolean playerExists(UUID uuid) {
         try {
-            openConnection();
+            Connection connection = createConnection();
 
-            PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM `account` WHERE uuid=?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `account` WHERE uuid=?");
             statement.setString(1, uuid.toString());
             ResultSet resultSet = statement.executeQuery();
             boolean exists = resultSet.next();
@@ -219,9 +210,9 @@ public class AccountHub extends cpsModule {
     public int updateRank(UUID uuid, Rank rank) {
         try {
             Message.console("§aPreparing to update " + uuid.toString() + "'s rank to " + rank.toString());
-            openConnection();
+            Connection connection = createConnection();
 
-            PreparedStatement statement = getConnection().prepareStatement("UPDATE `account` SET rank=? WHERE uuid=?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE `account` SET rank=? WHERE uuid=?");
             statement.setString(1, rank.toString());
             statement.setString(2, uuid.toString());
 

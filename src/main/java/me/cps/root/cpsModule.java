@@ -29,7 +29,7 @@ public abstract class cpsModule implements Listener {
             Message.console("§a**CORE** Module " + name + " §dv" + version + " §ais being loaded...");
         else
             Message.console("§bModule " + name + " §dv" + version + " §ais being loaded...");
-        //Root.getModulesEnabled().add(this);
+        CommandHub.modulesEnabled.add(this);
     }
 
 
@@ -43,6 +43,10 @@ public abstract class cpsModule implements Listener {
 
     public Boolean isCore() {
         return core;
+    }
+
+    public String getVersion() {
+        return version;
     }
 
     public void registerListener(Listener listener) {

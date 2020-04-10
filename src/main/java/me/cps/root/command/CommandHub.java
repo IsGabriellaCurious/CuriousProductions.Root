@@ -16,6 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,8 @@ public class CommandHub extends cpsModule {
     private static CommandHub instance; //obvious, the instance.
 
     private List<String> illegalCommands = Arrays.asList("plugins", "pl", "ver", "version", "me", "minecraft:me"); //a list of commands that people below developer can't use.
+
+    public static ArrayList<cpsModule> modulesEnabled = new ArrayList<>();
 
     public CommandHub(JavaPlugin plugin) {
         super("Command Hub", plugin, "1.0",true);
