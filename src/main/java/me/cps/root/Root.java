@@ -13,6 +13,7 @@ import de.dytanic.cloudnet.wrapper.Wrapper;
 import me.cps.root.account.AccountHub;
 import me.cps.root.chat.ChatHub;
 import me.cps.root.command.CommandHub;
+import me.cps.root.proxy.ProxyManager;
 import me.cps.root.redis.RedisHub;
 import me.cps.root.test.TestMod2;
 import me.cps.root.test.TestModule;
@@ -36,7 +37,7 @@ public class Root extends JavaPlugin {
         CommandHub commandHub = new CommandHub(this);
         RedisHub redisHub = new RedisHub(this, null, Rank.DEFAULT, 100, false, false);
         AccountHub accountHub = new AccountHub(this, "ssh.centurion.pw", "cps", "L2ZBcOxTQEvvz8zW", "cps", 3306);
-        ProxyManager proxyManager = new ProxyManager(this)
+        ProxyManager proxyManager = new ProxyManager(this);
         ChatHub chatHub = new ChatHub(this);
 
         TestModule testModule = new TestModule(this);

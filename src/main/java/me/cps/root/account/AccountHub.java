@@ -255,12 +255,17 @@ public class AccountHub extends cpsModule {
             }
         }
 
-        if (playerExists(event.getUniqueId())) {
+        boolean exists = playerExists(event.getUniqueId());
+
+        if (exists) {
             int result = loadPlayer(event.getUniqueId());
             if (result == 0) {
                 event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n\n§b§lCPS§r\n§cThere was an error loading your account. Please try again.§r\n\n§fIf the issue continues, please contact an " + Rank.ADMIN.getPrefix());
                 return;
             }
+        } else if (exists == nullBoolean) {
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "error checking if you exist in our db. try again");
+            return;
         } else {
             int result = createPlayer(event.getUniqueId());
             if (result == 0) {
