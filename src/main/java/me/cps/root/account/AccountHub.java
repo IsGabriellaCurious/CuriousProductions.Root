@@ -239,7 +239,7 @@ public class AccountHub extends cpsModule {
             return;
         }
 
-        if (getPlugin().getServer().getOnlinePlayers().size() >= RedisHub.getInstance().maxPlayers) {
+        if (getPlugin().getServer().getOnlinePlayers().size() >= RedisHub.getInstance().maxPlayers && !RedisHub.getInstance().gameServer) {
             if (!RedisHub.getInstance().donatorPriority) {
                 event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_FULL, "\n\n§b§lCPS§r\n§cThis server is full. Please try again later.");
                 return;
@@ -255,7 +255,7 @@ public class AccountHub extends cpsModule {
                 return;
             }
         } else if (exists == nullBoolean) {
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "error checking if you exist in our db. try again");
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Uh oh! There was an error whilst checking if you exist! Please try again.");
             return;
         } else {
             int result = createPlayer(event.getUniqueId());

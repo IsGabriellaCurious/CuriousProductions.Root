@@ -74,6 +74,14 @@ public class RedisHub extends cpsModule {
         return instance;
     }
 
+    public JedisPool getPool() {
+        return pool;
+    }
+
+    public ServiceId getServiceId() {
+        return serviceId;
+    }
+
     //this will register the server inside of redis, will be used later when bungeecord comes into all this (and probably cloudnet)
     private void initServer() {
         try (Jedis jedis = pool.getResource()) {
@@ -82,7 +90,7 @@ public class RedisHub extends cpsModule {
 
             serviceId = Wrapper.getInstance().getServiceId(); //what we need to know about the server from this. (cloudnte)
 
-            String key = "cps.server." + serviceId.getTaskName() + "." + serviceId.getName();
+            String key = "cps.server." + serviceId.getName();
             if (!jedis.exists(key)) {
                 Message.console("§cError! Server config key not found. Creating one now...");
                 jedis.hset(key, "rankRequired", rankRequired.toString());
@@ -115,7 +123,7 @@ public class RedisHub extends cpsModule {
                 jedis.auth(password);
 
             Message.console("§cShutting down the server...");
-            jedis.srem("cps.onlineServers,", serviceId.getName());
+            jedis.srem("cps.onlineServers", serviceId.getName());
             Message.console("§cServer removed from online servers list successfully.");
         } catch (Exception e) {
             Message.console("§cFailed to remove server from the online servers list. See stack trace below...");
