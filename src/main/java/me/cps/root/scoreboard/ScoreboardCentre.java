@@ -48,10 +48,14 @@ public class ScoreboardCentre extends cpsModule {
         scoreboards.remove(event.getPlayer());
     }
 
-    /*@EventHandler
-    public void onMili(PerMilliEvent evnet) {
+    public void resetCacheAll() {
         for (cpsScoreboard s : scoreboards.values()) {
-            s.apply();
+            s.clearCacheOnNext();
         }
-    }*/
+    }
+
+    public void resetCache(Player player) {
+        cpsScoreboard s = scoreboards.get(player);
+        s.clearCacheOnNext();
+    }
 }

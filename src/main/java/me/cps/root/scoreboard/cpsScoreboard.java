@@ -30,6 +30,7 @@ public class cpsScoreboard {
     private ArrayList<String> scores = new ArrayList<>();
     private ArrayList<String> beforeNew = new ArrayList<>(); //a cache, bascially.
     private ArrayList<String> toChange = new ArrayList<>(); //line to change
+    private boolean clearCache = false;
 
     public String title = "§b§lCPS"; //default title
     //these 2 should probably never used as colours n stuff should be in the title string with §
@@ -46,6 +47,10 @@ public class cpsScoreboard {
         objective.setDisplayName(title);
 
         ScoreboardCentre.getInstance().getScoreboards().put(player, this);
+    }
+
+    public void clearCacheOnNext() {
+        clearCache = true;
     }
 
     public void setTitle(String title) {
@@ -70,6 +75,14 @@ public class cpsScoreboard {
     }
 
     public void apply() {
+        if (clearCache) {
+            for (String s : beforeNew)
+                scoreboard.resetScores(s);
+            beforeNew.clear();
+            toChange.clear();
+            clearCache = false;
+        }
+
         objective.setDisplayName(title);
 
         //this makes spacing possible
