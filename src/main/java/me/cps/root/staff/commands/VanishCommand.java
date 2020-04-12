@@ -27,9 +27,9 @@ public class VanishCommand extends cpsCommand<StaffHub> {
         }
 
         if (StaffHub.getInstance().getOption(StaffOptions.Vanish, caller))
-            StaffHub.getInstance().toggleVanish(false, false, caller);
+            StaffHub.getInstance().toggleVanish(false, false, true, caller);
         else
-            StaffHub.getInstance().toggleVanish(true, false, caller);
+            StaffHub.getInstance().toggleVanish(true, false, true, caller);
 
     }
 }

@@ -21,7 +21,7 @@ public class ToggleGameReviewCommand extends cpsCommand<StaffHub> {
 
     @Override
     public void execute(Player caller, String[] args) {
-        if (!getPlugin().getInStaffMode().contains(caller)) {
+        /*if (!getPlugin().getInStaffMode().contains(caller)) {
             caller.sendMessage(StaffHub.prefix + "§cYou must be in staff mode to do this!");
             return;
         }
@@ -31,5 +31,6 @@ public class ToggleGameReviewCommand extends cpsCommand<StaffHub> {
         } else {
             StaffHub.getInstance().toggleGameReview(true, false, caller);
         }
+         */
     }
 }

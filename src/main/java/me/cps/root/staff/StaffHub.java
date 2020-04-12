@@ -19,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import redis.clients.jedis.Jedis;
 
@@ -29,17 +30,19 @@ public class StaffHub extends cpsModule {
     private static StaffHub instance;
 
     private ArrayList<Player> inStaffMode;
+    private ArrayList<Player> vanished;
 
-    public static String prefix = "§dStaff> ";
+    public static String prefix = "§6Staff> ";
 
     public StaffHub(JavaPlugin plugin) {
-        super("Staff Hub", plugin, "1.0-alpha", true);
+        super("Staff Hub", plugin, "1.1-alpha", true);
         instance = this;
         registerSelf();
         inStaffMode = new ArrayList<>();
+        vanished = new ArrayList<>();
         registerCommand(new VanishCommand(this));
         registerCommand(new ToggleGameChatCommand(this));
-        registerCommand(new ToggleGameReviewCommand(this));
+        //registerCommand(new ToggleGameReviewCommand(this));
         registerCommand(new StaffModeCommand(this));
     }
 
@@ -58,6 +61,12 @@ public class StaffHub extends cpsModule {
         }
     }
 
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        if (getVanished().contains(event.getPlayer()))
+            getVanished().remove(event.getPlayer());
+    }
+
     public static StaffHub getInstance() {
         return instance;
     }
@@ -66,11 +75,15 @@ public class StaffHub extends cpsModule {
         return inStaffMode;
     }
 
+    public ArrayList<Player> getVanished() {
+        return vanished;
+    }
+
     public void staffMode(Player player) {
         if (!getInStaffMode().contains(player)) {
             boolean vanish;
             boolean gameChat;
-            boolean gameReview;
+            //boolean gameReview;
             getPlugin().getServer().getPluginManager().callEvent(new StaffModeUpdateEvent(player, true));
             getInStaffMode().add(player);
             try (Jedis jedis = RedisHub.getInstance().getPool().getResource()) {
@@ -80,15 +93,15 @@ public class StaffHub extends cpsModule {
                     vanish = true;
                     setOption(StaffOptions.GameChat, false, true, player);
                     gameChat = false;
-                    setOption(StaffOptions.GameReview, true, true, player);
-                    gameReview = true;
+                    //setOption(StaffOptions.GameReview, true, true, player);
+                    //gameReview = true;
                 } else {
                     vanish = Boolean.valueOf(jedis.hget(key, StaffOptions.Vanish.getRedisName()));
                     setOption(StaffOptions.Vanish, vanish, true, player);
                     gameChat = Boolean.valueOf(jedis.hget(key, StaffOptions.GameChat.getRedisName()));
                     setOption(StaffOptions.GameChat, gameChat, true, player);
-                    gameReview = Boolean.valueOf(jedis.hget(key, StaffOptions.GameReview.getRedisName()));
-                    setOption(StaffOptions.GameReview, gameReview, true, player);
+                    //gameReview = Boolean.valueOf(jedis.hget(key, StaffOptions.GameReview.getRedisName()));
+                    //setOption(StaffOptions.GameReview, true, true, player);
                 }
                 jedis.sadd("cps.instaffmode", player.getName());
             }
@@ -99,19 +112,21 @@ public class StaffHub extends cpsModule {
             if (rank == Rank.HELPER)
                 player.sendMessage("§8Does not apply in games, use Game Review");
             player.sendMessage(prefix + "§eAnti-Game Chat: " + (gameChat ? "§aEnabled" : "§cDisabled"));
-            player.sendMessage(prefix + "§aGame Review: " + (gameReview ? "§aEnabled" : "§cDisabled"));
-            if (rank == Rank.HELPER)
-                player.sendMessage("§8You will not be in the game. You shall be invisible and players wont know you've joined.");
-            if (vanish) {
-                toggleVanish(true, true, player);
-            }
+            //player.sendMessage(prefix + "§aGame Review: " + (gameReview ? "§aEnabled" : "§cDisabled"));
+            //if (rank == Rank.HELPER)
+                //player.sendMessage("§8You will not be in the game. You shall be invisible and players wont know you've joined.");
+            if (vanish)
+                toggleVanish(true, true, true, player);
         } else {
+            //setOption(StaffOptions.GameReview, false, true, player);
             player.sendMessage(prefix + "§cYou are no-longer in staff mode.");
             getInStaffMode().remove(player);
             try (Jedis jedis = RedisHub.getInstance().getPool().getResource()) {
                 jedis.srem("cps.instaffmode", player.getName());
             }
             getPlugin().getServer().getPluginManager().callEvent(new StaffModeUpdateEvent(player, false));
+            if (getOption(StaffOptions.Vanish, player))
+                toggleVanish(false, true, false, player);
         }
     }
 
@@ -133,17 +148,24 @@ public class StaffHub extends cpsModule {
         }
     }
 
-    public void toggleVanish(boolean toggle, boolean override, Player staff) {
+    public void toggleVanish(boolean toggle, boolean override, boolean push, Player staff) {
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             if (!Rank.hasRank(p.getUniqueId(), Rank.HELPER))
-                if (toggle)
+                if (toggle) {
                     p.hidePlayer(staff);
-                else
+                    vanished.add(staff);
+                } else {
                     p.showPlayer(staff);
+                    vanished.remove(staff);
+                }
 
         }
-        staff.sendMessage(prefix + "§7Vanish: " + (toggle ? "§aEnabled" : "§cDisabled"));
-        setOption(StaffOptions.Vanish, toggle, override, staff);
+        if (push) {
+            staff.sendMessage(prefix + "§7Vanish: " + (toggle ? "§aEnabled" : "§cDisabled"));
+            setOption(StaffOptions.Vanish, toggle, override, staff);
+        } else {
+            staff.sendMessage(prefix + "§7Temp Vanish: " + (toggle ? "§aEnabled" : "§cDisabled"));
+        }
     }
 
     public void toggleGameChat(boolean toggle, boolean override, Player staff) {
@@ -151,10 +173,10 @@ public class StaffHub extends cpsModule {
         staff.sendMessage(prefix + "§7Game Chat: " + (toggle ? "§aEnabled" : "§cDisabled"));
     }
 
-    public void toggleGameReview(boolean toggle, boolean override, Player staff) {
+    /*public void toggleGameReview(boolean toggle, boolean override, Player staff) {
         setOption(StaffOptions.GameReview, toggle, override, staff);
         staff.sendMessage(prefix + "§7Game Review: " + (toggle ? "§aEnabled" : "§cDisabled"));
-    }
+    }*/
 
 
 }

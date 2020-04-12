@@ -3,8 +3,8 @@ package me.cps.root.staff;
 public enum StaffOptions {
 
     Vanish("vanish"),
-    GameChat("gamechat"),
-    GameReview("gamereview");
+    GameChat("gamechat");
+    //GameReview("gamereview");
 
     private String redisName;
 
