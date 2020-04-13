@@ -15,6 +15,7 @@ import me.cps.root.chat.ChatHub;
 import me.cps.root.command.CommandHub;
 import me.cps.root.proxy.ProxyManager;
 import me.cps.root.redis.RedisHub;
+import me.cps.root.scoreboard.ScoreboardCentre;
 import me.cps.root.test.TestMod2;
 import me.cps.root.test.TestModule;
 import me.cps.root.util.Message;
@@ -39,6 +40,7 @@ public class Root extends JavaPlugin {
         AccountHub accountHub = new AccountHub(this, "ssh.centurion.pw", "cps", "L2ZBcOxTQEvvz8zW", "cps", 3306);
         ProxyManager proxyManager = new ProxyManager(this);
         ChatHub chatHub = new ChatHub(this);
+        ScoreboardCentre scoreboardCentre = new ScoreboardCentre(this);
 
         TestModule testModule = new TestModule(this);
         TestMod2 testMod2 = new TestMod2(this);

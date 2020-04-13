@@ -7,14 +7,12 @@ permission to read this. if not, fuck off :)
 Copyright (c) IsGeorgeCurious 2020
 */
 
+import me.cps.root.Rank;
 import me.cps.root.util.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -49,6 +47,7 @@ public class cpsScoreboard {
         ScoreboardCentre.getInstance().getScoreboards().put(player, this);
     }
 
+
     public void clearCacheOnNext() {
         clearCache = true;
     }
@@ -57,6 +56,9 @@ public class cpsScoreboard {
         this.title = title;
     }
 
+    public Scoreboard getScoreboard() {
+        return scoreboard;
+    }
 
     public void add(String string) {
         scores.add(string);

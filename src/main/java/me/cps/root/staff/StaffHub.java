@@ -10,10 +10,13 @@ Copyright (c) IsGeorgeCurious 2020
 import me.cps.root.Rank;
 import me.cps.root.cpsModule;
 import me.cps.root.redis.RedisHub;
+import me.cps.root.scoreboard.ScoreboardCentre;
+import me.cps.root.scoreboard.cpsScoreboard;
 import me.cps.root.staff.commands.StaffModeCommand;
 import me.cps.root.staff.commands.ToggleGameChatCommand;
 import me.cps.root.staff.commands.ToggleGameReviewCommand;
 import me.cps.root.staff.commands.VanishCommand;
+import me.cps.root.util.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,7 +38,7 @@ public class StaffHub extends cpsModule {
     public static String prefix = "§6Staff> ";
 
     public StaffHub(JavaPlugin plugin) {
-        super("Staff Hub", plugin, "1.1-alpha", true);
+        super("Staff Hub", plugin, "1.2", true);
         instance = this;
         registerSelf();
         inStaffMode = new ArrayList<>();
@@ -49,6 +52,10 @@ public class StaffHub extends cpsModule {
     @EventHandler(priority =  EventPriority.LOWEST)
     public void onjoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        for (Player p : vanished) {
+            if (!Rank.hasRank(player.getUniqueId(), Rank.HELPER))
+                event.getPlayer().hidePlayer(p);
+        }
         if (!Rank.hasRank(player.getUniqueId(), Rank.HELPER))
             return;
 
@@ -59,12 +66,23 @@ public class StaffHub extends cpsModule {
                 staffMode(player);
             }
         }
+
+        if (!getInStaffMode().isEmpty()) {
+            player.sendMessage("§cBe aware! The following are currently in staff mode:");
+            for (Player p : inStaffMode) {
+                player.sendMessage(Rank.getRank(p.getUniqueId()).getPrefix() + p.getName() + " §6[V: " + (getOption(StaffOptions.Vanish, p) ? "§aT" : "§cF") + "§6]");
+            }
+            player.sendMessage("§cDO NOT blow their cover if they are vanished.");
+        }
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         if (getVanished().contains(event.getPlayer()))
             getVanished().remove(event.getPlayer());
+
+        if (getInStaffMode().contains(event.getPlayer()))
+            getInStaffMode().remove(event.getPlayer());
     }
 
     public static StaffHub getInstance() {
@@ -79,8 +97,11 @@ public class StaffHub extends cpsModule {
         return vanished;
     }
 
+    @Deprecated
     public void staffMode(Player player) {
         if (!getInStaffMode().contains(player)) {
+            ScoreboardCentre.getInstance().updateSuffixes();
+            ScoreboardCentre.getInstance().setSuffix(player, "§6[SM]");
             boolean vanish;
             boolean gameChat;
             //boolean gameReview;
@@ -117,7 +138,11 @@ public class StaffHub extends cpsModule {
                 //player.sendMessage("§8You will not be in the game. You shall be invisible and players wont know you've joined.");
             if (vanish)
                 toggleVanish(true, true, true, player);
+
+            Message.staff("§7[§o" + Rank.getRank(player.getUniqueId()).getColor() + player.getName() + " §ehas entered staff mode.§7]");
         } else {
+            ScoreboardCentre.getInstance().updateSuffixes();
+            ScoreboardCentre.getInstance().setSuffix(player, null);
             //setOption(StaffOptions.GameReview, false, true, player);
             player.sendMessage(prefix + "§cYou are no-longer in staff mode.");
             getInStaffMode().remove(player);
@@ -127,6 +152,9 @@ public class StaffHub extends cpsModule {
             getPlugin().getServer().getPluginManager().callEvent(new StaffModeUpdateEvent(player, false));
             if (getOption(StaffOptions.Vanish, player))
                 toggleVanish(false, true, false, player);
+
+            Message.staff("§7[§o" + Rank.getRank(player.getUniqueId()).getColor() + player.getName() + " §ehas left staff mode.§7]");
+
         }
     }
 

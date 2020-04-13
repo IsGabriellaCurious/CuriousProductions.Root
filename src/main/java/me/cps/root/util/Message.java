@@ -7,6 +7,7 @@ permission to read this. if not, fuck off :)
 Copyright (c) IsGeorgeCurious 2020
 */
 
+import me.cps.root.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -18,6 +19,14 @@ public class Message {
 
     public static void broadcast(String message) {
         Bukkit.getServer().broadcastMessage(message);
+    }
+
+    public static void staff(String message) {
+        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+            if (Rank.hasRank(p.getUniqueId(), Rank.HELPER)) {
+                p.sendMessage(message);
+            }
+        }
     }
 
 }
