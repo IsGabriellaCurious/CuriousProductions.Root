@@ -12,6 +12,7 @@ import de.dytanic.cloudnet.wrapper.Wrapper;
 import me.cps.root.Rank;
 import me.cps.root.cpsModule;
 import me.cps.root.util.Message;
+import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -82,6 +83,14 @@ public class RedisHub extends cpsModule {
         return serviceId;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean isPwRequired() {
+        return pwRequired;
+    }
+
     //this will register the server inside of redis, will be used later when bungeecord comes into all this (and probably cloudnet)
     private void initServer() {
         try (Jedis jedis = pool.getResource()) {
@@ -97,18 +106,23 @@ public class RedisHub extends cpsModule {
                 jedis.hset(key, "maxPlayers", String.valueOf(maxPlayers));
                 jedis.hset(key, "donatorPriority", String.valueOf(donatorPriority));
                 jedis.hset(key, "gameServer", String.valueOf(gameServer));
+                jedis.hset(key, "onlinePlayers", "0");
+                jedis.hset(key, "version", "waiting");
                 Message.console("§aConfig created and applied!");
             } else {
                 Message.console("§aServer config found. Loading...");
                 rankRequired = Rank.valueOf(jedis.hget(key, "rankRequired"));
-                maxPlayers = Integer.valueOf(jedis.hget(key, "maxPlayers"));
-                donatorPriority = Boolean.valueOf(jedis.hget(key, "donatorPriority"));
-                gameServer = Boolean.valueOf(jedis.hget(key, "gameServer"));
+                maxPlayers = Integer.parseInt(jedis.hget(key, "maxPlayers"));
+                donatorPriority = Boolean.parseBoolean(jedis.hget(key, "donatorPriority"));
+                gameServer = Boolean.parseBoolean(jedis.hget(key, "gameServer"));
                 Message.console("§aServer config has been loaded and applied successfully!");
             }
 
             jedis.sadd("cps.onlineServers", serviceId.getName());
             Message.console("§aServer registered in the onlineServers registry!");
+
+            jedis.sadd("cps.onlineGroup." + serviceId.getTaskName(), serviceId.getName());
+            Message.console("§aServer registered in the onlineGroup." + serviceId.getTaskName() + " registry!");
 
             Message.console("§aServer " + serviceId.getName() + " has been initialized successfully!");
         } catch (Exception e) {
@@ -125,6 +139,11 @@ public class RedisHub extends cpsModule {
             Message.console("§cShutting down the server...");
             jedis.srem("cps.onlineServers", serviceId.getName());
             Message.console("§cServer removed from online servers list successfully.");
+
+            jedis.srem("cps.onlineGroup." + serviceId.getTaskName(), serviceId.getName());
+            Message.console("§cServer removed from the onlineGroup." + serviceId.getTaskName() + " list successfully.");
+
+            jedis.hset("cps.server." + serviceId.getName(), "onlinePlayers", "0");
         } catch (Exception e) {
             Message.console("§cFailed to remove server from the online servers list. See stack trace below...");
             e.printStackTrace();

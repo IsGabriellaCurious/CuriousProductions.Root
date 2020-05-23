@@ -27,6 +27,11 @@ public class ServerCommand extends cpsCommand<ProxyManager> {
             return;
         }
 
+        if (!Rank.hasRank(caller.getUniqueId(), Rank.HELPER)) {
+            caller.sendMessage("§cError! You don't have permission to use this.");
+            return;
+        }
+
         String server = args[0];
 
         if (!getPlugin().serverExists(server)) {

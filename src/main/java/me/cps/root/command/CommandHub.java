@@ -10,9 +10,11 @@ Copyright (c) IsGeorgeCurious 2020
 import me.cps.root.Rank;
 import me.cps.root.command.commands.ModulesEnabledCommand;
 import me.cps.root.cpsModule;
+import me.cps.root.util.CPSProtocol;
 import me.cps.root.util.Message;
 import me.cps.root.util.PerMilliRunnable;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,14 +28,17 @@ public class CommandHub extends cpsModule {
     private HashMap<String, cpsCommand> registeredCommands; //useable commands, command hub will use this to check if the command exists.
     private static CommandHub instance; //obvious, the instance.
 
-    private List<String> illegalCommands = Arrays.asList("plugins", "pl", "ver", "version", "me", "minecraft:me"); //a list of commands that people below developer can't use.
+    private List<String> illegalCommands = Arrays.asList("plugins", "pl",  "bukkit:plugins", "bukkit:pl", "ver", "version", "bukkit:ver", "bukkit:version", "me", "minecraft:me", "help", "?", "bukkit:help", "bukkit:?", "ban", "banip", "mute", "warn", "pardon", "pardonip", "aac", "aac:aac"); //a list of commands that people below developer can't use.
 
     public static ArrayList<cpsModule> modulesEnabled = new ArrayList<>();
 
-    public CommandHub(JavaPlugin plugin) {
-        super("Command Hub", plugin, "1.0",true);
 
-        plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new PerMilliRunnable(plugin), 0, 1);
+    public CommandHub(JavaPlugin plugin, boolean mili) {
+        super("Command Hub", plugin, "1.0",true);
+        CPSProtocol.setup();
+
+        if (mili)
+            plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new PerMilliRunnable(plugin), 0, 1);
 
         registeredCommands = new HashMap<>();
         registerSelf();
@@ -59,13 +64,13 @@ public class CommandHub extends cpsModule {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onCommand(PlayerCommandPreprocessEvent event) { //commandpreprocess is basically before the command is executed.
         String requestedCommand = event.getMessage().substring(1).split(" ")[0]; //grabs the command from the whole bit entered.
         String[] args = removeCommand(event.getMessage()); //the args!
 
         //this is the illegal command check (see the illegalCommands list above)
-        if (illegalCommands.contains(requestedCommand)) {
+        if (illegalCommands.contains(requestedCommand.toLowerCase())) {
             if (!Rank.hasRank(event.getPlayer().getUniqueId(), Rank.DEVELOPER)) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage("§cError! That command has been disabled.");

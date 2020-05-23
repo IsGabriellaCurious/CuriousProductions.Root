@@ -19,6 +19,7 @@ public class StaffModeCommand extends cpsCommand<StaffHub> {
     }
 
     @Override
+    @Deprecated
     public void execute(Player caller, String[] args) {
         getPlugin().staffMode(caller);
     }

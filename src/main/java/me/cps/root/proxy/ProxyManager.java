@@ -7,6 +7,7 @@ permission to read this. if not, fuck off :)
 Copyright (c) IsGeorgeCurious 2020
 */
 
+import de.dytanic.cloudnet.driver.CloudNetDriver;
 import de.dytanic.cloudnet.ext.bridge.BridgePlayerManager;
 import de.dytanic.cloudnet.ext.bridge.player.ICloudPlayer;
 import me.cps.root.Rank;
@@ -15,6 +16,9 @@ import me.cps.root.proxy.command.HubCommand;
 import me.cps.root.proxy.command.ServerCommand;
 import me.cps.root.redis.RedisHub;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import redis.clients.jedis.Jedis;
 
@@ -27,6 +31,7 @@ public class ProxyManager extends cpsModule {
         instance = this;
         registerCommand(new ServerCommand(this));
         registerCommand(new HubCommand(this));
+        registerSelf();
     }
 
     public static ProxyManager getInstance() {
@@ -67,6 +72,16 @@ public class ProxyManager extends cpsModule {
         //assuming the server exists
         try (Jedis jedis = RedisHub.getInstance().getPool().getResource()) {
             return Rank.valueOf(jedis.hget("cps.server." + server, "rankRequired"));
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPreJoin(AsyncPlayerPreLoginEvent event) {
+        if (CloudNetDriver.getInstance().getServiceTaskProvider().getServiceTask("CPSProxy").isMaintenance()) {
+            if (Rank.forceHasRank(event.getUniqueId(), Rank.DEVELOPER))
+                event.allow();
+            else
+                event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "§cThis network is currently in maintenance mode.");
         }
     }
 

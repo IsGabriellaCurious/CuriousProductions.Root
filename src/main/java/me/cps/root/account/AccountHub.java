@@ -16,6 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -191,6 +192,54 @@ public class AccountHub extends cpsModule {
         }
     }
 
+    public String nameFromUUID(UUID uuid) {
+        try {
+            Connection connection = createConnection();
+
+            PreparedStatement statement = connection.prepareStatement("SELECT `name` FROM `account` WHERE uuid=?");
+            statement.setString(1, uuid.toString());
+            statement.executeQuery();
+
+            ResultSet resultSet = statement.getResultSet();
+
+            String result = null;
+            if (resultSet.next())
+                result = resultSet.getString("name");
+            else
+                result = "";
+
+            connection.close();
+            return result;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public UUID uuidFromName(String name) {
+        try {
+            Connection connection = createConnection();
+
+            PreparedStatement statement = connection.prepareStatement("SELECT `uuid` FROM `account` WHERE name=?");
+            statement.setString(1,name);
+            statement.executeQuery();
+
+            ResultSet resultSet = statement.getResultSet();
+
+            UUID result = null;
+            if (resultSet.next())
+                result = UUID.fromString(resultSet.getString("uuid"));
+
+            connection.close();
+            return result;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public boolean playerExists(UUID uuid) {
         try {
             Connection connection = createConnection();
@@ -254,9 +303,6 @@ public class AccountHub extends cpsModule {
                 event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "\n\n§b§lCPS§r\n§cThere was an error loading your account. Please try again.§r\n\n§fIf the issue continues, please contact an " + Rank.ADMIN.getPrefix());
                 return;
             }
-        } else if (exists == nullBoolean) {
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Uh oh! There was an error whilst checking if you exist! Please try again.");
-            return;
         } else {
             int result = createPlayer(event.getUniqueId());
             if (result == 0) {
@@ -274,6 +320,28 @@ public class AccountHub extends cpsModule {
         }
 
         getPlugin().getLogger().info("Added player " + event.getName() + " to the rank cache.");
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        if (Rank.hasRank(event.getPlayer().getUniqueId(), Rank.JUNIORADMIN)) {
+            if (!event.getPlayer().isOp())
+                event.getPlayer().setOp(true);
+        }
+        try {
+            Connection connection = createConnection();
+
+            PreparedStatement statement = connection.prepareStatement("UPDATE `account` SET name=? WHERE uuid=?");
+            statement.setString(1, event.getPlayer().getName());
+            statement.setString(2, event.getPlayer().getUniqueId().toString());
+
+            statement.executeUpdate();
+
+            connection.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @EventHandler

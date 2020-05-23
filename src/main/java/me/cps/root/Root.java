@@ -5,7 +5,7 @@ Hi there! Pls no stealing, unless you were given express
 permission to read this. if not, fuck off :)
 
 Copyright (c) IsGeorgeCurious 2020
-*/
+
 
 import de.dytanic.cloudnet.driver.service.ServiceConfiguration;
 import de.dytanic.cloudnet.driver.service.ServiceId;
@@ -35,11 +35,11 @@ public class Root extends JavaPlugin {
 
         //this just shows how to initialize cps modules
         // !!! ALWAYS INITIALIZE COMMAND HUB FIRST !!! - else it will nullpointerexception if you try to register a command.
-        CommandHub commandHub = new CommandHub(this);
+        CommandHub commandHub = new CommandHub(this, true);
         RedisHub redisHub = new RedisHub(this, null, Rank.DEFAULT, 100, false, false);
         AccountHub accountHub = new AccountHub(this, "ssh.centurion.pw", "cps", "L2ZBcOxTQEvvz8zW", "cps", 3306);
         ProxyManager proxyManager = new ProxyManager(this);
-        ChatHub chatHub = new ChatHub(this);
+        ChatHub chatHub = new ChatHub(this, true);
         ScoreboardCentre scoreboardCentre = new ScoreboardCentre(this);
 
         TestModule testModule = new TestModule(this);
@@ -75,3 +75,4 @@ public class Root extends JavaPlugin {
         return instance;
     }
 }
+*/

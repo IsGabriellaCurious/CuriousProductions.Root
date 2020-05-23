@@ -8,6 +8,7 @@ Copyright (c) IsGeorgeCurious 2020
 */
 
 import me.cps.root.Rank;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -28,5 +29,14 @@ public class Message {
             }
         }
     }
+
+    public static String combine(String[] args, int start) {
+        String msg = "";
+        for (int i = start; i<args.length; i++) {
+            msg = msg + args[i] + " ";
+        }
+        return msg;
+    }
+
 
 }

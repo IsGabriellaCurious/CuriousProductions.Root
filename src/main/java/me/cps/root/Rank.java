@@ -7,15 +7,22 @@ import java.util.UUID;
 
 public enum Rank {
 
+    OWNERHC("Ex-IA High Command", ChatColor.LIGHT_PURPLE, "[IA HC]", true),
     OWNER("Owner", ChatColor.AQUA, "[OWNER]", true),
     DEVELOPER("Developer", ChatColor.YELLOW, "[DEV]", false),
 
     ADMIN("Admin", ChatColor.DARK_RED, "[ADMIN]", false),
     JUNIORADMIN("Junior Admin", ChatColor.RED, "[JUNIOR ADMIN]", false),
 
+    IAHCVET("Ex-IA High Command", ChatColor.DARK_AQUA, "[IA HC]", false),
+
     SENIORMOD("Senior Mod", ChatColor.BLUE, "[SENIOR MOD]", false),
     MODERATOR("Moderator", ChatColor.BLUE, "[MOD]", false),
     HELPER("Helper", ChatColor.DARK_PURPLE, "[HELPER]", false),
+
+    IAHIGHVET("Ex-IA High Rank", ChatColor.BLUE, "[IA HR]", false),
+    IAMIDVET("Ex-IA Mid Rank", ChatColor.DARK_BLUE, "[IA MR]", false),
+    IAVET("IA Veteran", ChatColor.DARK_BLUE, "[IA VET]", false),
 
     FAMOUS("VIP", ChatColor.LIGHT_PURPLE, "[VIP]", true),
 
@@ -75,6 +82,8 @@ public enum Rank {
     //this will be used for tab list positioning (as you know, tab lists work via numeric/alphabetical order)
     public static String getLevel(Rank r) {
         switch (r) {
+            case OWNERHC:
+                return "1";
             case OWNER:
                 return "1";
             case DEVELOPER:
@@ -83,18 +92,26 @@ public enum Rank {
                 return "3";
             case JUNIORADMIN:
                 return "4";
-            case SENIORMOD:
+            case IAHCVET:
                 return "5";
-            case MODERATOR:
+            case SENIORMOD:
                 return "6";
-            case HELPER:
+            case MODERATOR:
                 return "7";
-            case FAMOUS:
+            case HELPER:
+                return "8";
+            case IAHIGHVET:
+                return "9";
+            case IAMIDVET:
                 return "A";
-            case DONATORPLUS:
+            case IAVET:
                 return "B";
-            case DONATOR:
+            case FAMOUS:
                 return "C";
+            case DONATORPLUS:
+                return "D";
+            case DONATOR:
+                return "E";
             case DEFAULT:
                 return "Z";
             default:

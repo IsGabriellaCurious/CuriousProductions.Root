@@ -13,13 +13,13 @@ import org.bukkit.entity.Player;
 
 public class PlaySound {
 
-    public static void all(Sound sound, int vol, int pitch) {
+    public static void all(Sound sound, float vol, float pitch) {
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             player.playSound(player.getLocation(), sound, vol, pitch);
         }
     }
 
-    public static void play(Player player, Sound sound, int vol, int pitch) {
+    public static void play(Player player, Sound sound, float vol, float pitch) {
         player.playSound(player.getLocation(), sound, vol, pitch);
     }
 
