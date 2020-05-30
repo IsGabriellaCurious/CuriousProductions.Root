@@ -31,4 +31,6 @@ Please note that some modules will require extra paramaters to enable.
 - Server Manager*
 - Disguise Manager (ALPHA, should not be enabled (sorry this endedup in this branch))
 
-* This is a **core** module and **must be enabled**.
+*This is a **core** module and **must be enabled**.
+
+For the update checker to work, you must run the `checkForUpdates` method from Network Data Hub.
