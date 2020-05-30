@@ -3,11 +3,13 @@ package me.cps.root.punish;
 import de.dytanic.cloudnet.driver.event.EventListener;
 import de.dytanic.cloudnet.driver.event.events.channel.ChannelMessageReceiveEvent;
 import de.dytanic.cloudnet.ext.bridge.BridgePlayerManager;
+import me.cps.root.networkdata.NetworkDataHub;
 import me.cps.root.util.Rank;
 import me.cps.root.account.AccountHub;
 import me.cps.root.util.Message;
 import me.cps.root.util.center.Centered;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -56,7 +58,7 @@ public class PlayerPunishHandler {
 
             if (isAc) {
                 Message.broadcast(Centered.create("§8»§m----------------------------------------§r§8«"));
-                Message.broadcast(Centered.create("§c" + player.getName() + "§f has been " + type.getMessage() + " by §9§lExile Spray AC"));
+                Message.broadcast(Centered.create("§c" + player.getName() + "§f has been " + type.getMessage() + " by " + NetworkDataHub.getNetworkDataBase().getNetworkPrimaryColour() + ChatColor.BOLD + NetworkDataHub.getNetworkDataBase().getAnticheatName()));
                 Message.broadcast(" ");
                 Message.broadcast(Centered.create("§eReason §8» §f" + reason));
                 Message.broadcast(Centered.create("§eDuration §8» §f" + durationMessage));
