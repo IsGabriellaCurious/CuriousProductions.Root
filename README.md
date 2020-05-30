@@ -3,6 +3,7 @@ Copyright (c) 2020 Gabriella Hotten (see license in LICENSE.md)
 The core files of every CuriousProductions plugin.
 
 **Setup**
+
 Very little setup is required for this as it is only a dependency, so please read below for requirements and some instructions.
 
 CuriousProductions plugins **require** a MySQL database and a Redis Server to function.
