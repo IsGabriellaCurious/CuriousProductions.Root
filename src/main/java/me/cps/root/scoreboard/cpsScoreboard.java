@@ -30,9 +30,9 @@ public class cpsScoreboard {
     private ArrayList<String> toChange = new ArrayList<>(); //line to change
     private boolean clearCache = false;
 
-    public String title = NetworkDataHub.getNetworkDataBase().getNetworkPrimiaryColour() + NetworkDataHub.getNetworkDataBase().getNetworkName(); //default title
+    public String title = NetworkDataHub.getNetworkDataBase().getNetworkPrimaryColour() + NetworkDataHub.getNetworkDataBase().getNetworkName(); //default title
     //these 2 should probably never used as colours n stuff should be in the title string with §
-    public ChatColor primaryColour = NetworkDataHub.getNetworkDataBase().getNetworkPrimiaryColour();
+    public ChatColor primaryColour = NetworkDataHub.getNetworkDataBase().getNetworkPrimaryColour();
     public ChatColor secondaryColour = NetworkDataHub.getNetworkDataBase().getNetworkSecondaryColour();
     public boolean boldTitle = true;
 

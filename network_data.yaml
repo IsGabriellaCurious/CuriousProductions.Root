@@ -1,0 +1,15 @@
+mysqlUrl: localhost
+mysqlUser: cps
+mysqlPw: password
+mysqlDb: cps
+mysqlPort: 3306
+redisUrl: localhost
+redisPw: null
+redisPort: 6379
+networkName: CPS
+networkPrimaryColour: AQUA
+networkSecondaryColour: BLUE
+networkWebsite: cps.me
+networkIp: play.cps.me
+anticheatName: CPS AC
+configVersion: 1.0

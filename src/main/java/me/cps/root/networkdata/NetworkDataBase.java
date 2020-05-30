@@ -16,7 +16,7 @@ public class NetworkDataBase {
     public NetworkDataBase(String mysqlUrl, String mysqlUser, String mysqlPw, String mysqlDb, int mysqlPort,
                            String redisUrl, String redisPw, int redisPort,
                            String networkName, ChatColor networkPrimaryColour, ChatColor networkSecondaryColour,
-                           String networkWebsite, String networkIp)
+                           String networkWebsite, String networkIp, String anicheatName, String configVersion)
     {
         this.mysqlUrl = mysqlUrl;
         this.mysqlUser = mysqlUser;
@@ -29,10 +29,12 @@ public class NetworkDataBase {
         this.redisPort = redisPort;
 
         this.networkName = networkName;
-        this.networkPrimiaryColour = networkPrimaryColour;
+        this.networkPrimaryColour = networkPrimaryColour;
         this.networkSecondaryColour = networkSecondaryColour;
         this.networkWebsite = networkWebsite;
         this.networkIp = networkIp;
+        this.anticheatName = anicheatName;
+        this.configVersion = configVersion;
     }
 
     public NetworkDataBase() {}
@@ -48,10 +50,12 @@ public class NetworkDataBase {
     private int redisPort;
 
     private String networkName;
-    private ChatColor networkPrimiaryColour;
+    private ChatColor networkPrimaryColour;
     private ChatColor networkSecondaryColour;
     private String networkWebsite;
     private String networkIp;
+    private String anticheatName;
+    private String configVersion;
 
     public String getMysqlUrl() { return mysqlUrl; }
     public String getMysqlUser() { return mysqlUser; }
@@ -62,8 +66,10 @@ public class NetworkDataBase {
     public String getRedisPw() { return redisPw; }
     public int getRedisPort() { return redisPort; }
     public String getNetworkName() { return networkName; }
-    public ChatColor getNetworkPrimiaryColour() { return networkPrimiaryColour; }
+    public ChatColor getNetworkPrimaryColour() { return networkPrimaryColour; }
     public ChatColor getNetworkSecondaryColour() { return networkSecondaryColour; }
     public String getNetworkWebsite() { return networkWebsite; }
     public String getNetworkIp() { return networkIp; }
+    public String getAnticheatName() { return anticheatName; }
+    public String getConfigVersion() { return configVersion; }
 }
