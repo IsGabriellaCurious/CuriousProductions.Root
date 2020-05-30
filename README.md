@@ -1,5 +1,6 @@
 # CuriousProductions.Root
 Copyright (c) 2020 Gabriella Hotten (see license in LICENSE.md)
+
 The core files of every CuriousProductions plugin.
 
 **Setup**
