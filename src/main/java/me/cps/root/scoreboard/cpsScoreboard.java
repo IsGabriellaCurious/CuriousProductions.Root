@@ -1,23 +1,23 @@
 package me.cps.root.scoreboard;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
-import me.cps.root.Rank;
-import me.cps.root.util.Message;
+import me.cps.root.networkdata.NetworkDataHub;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Set;
 
+/**
+ * Curious Productions Root
+ * Scoreboard Centre - cpsScoreboard
+ *
+ * Main class that holds every player's scoreboard information
+ * TODO: rewrite this entire system because it's kina confusing and I really don't like it
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-04-09
+ */
 public class cpsScoreboard {
 
     private Player player;
@@ -30,9 +30,10 @@ public class cpsScoreboard {
     private ArrayList<String> toChange = new ArrayList<>(); //line to change
     private boolean clearCache = false;
 
-    public String title = "§b§lCPS"; //default title
+    public String title = NetworkDataHub.getNetworkDataBase().getNetworkPrimiaryColour() + NetworkDataHub.getNetworkDataBase().getNetworkName(); //default title
     //these 2 should probably never used as colours n stuff should be in the title string with §
-    public ChatColor titleColour = ChatColor.AQUA;
+    public ChatColor primaryColour = NetworkDataHub.getNetworkDataBase().getNetworkPrimiaryColour();
+    public ChatColor secondaryColour = NetworkDataHub.getNetworkDataBase().getNetworkSecondaryColour();
     public boolean boldTitle = true;
 
     public cpsScoreboard(Player player) {
@@ -46,7 +47,6 @@ public class cpsScoreboard {
 
         ScoreboardCentre.getInstance().getScoreboards().put(player, this);
     }
-
 
     public void clearCacheOnNext() {
         clearCache = true;

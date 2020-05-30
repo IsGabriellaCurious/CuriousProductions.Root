@@ -1,16 +1,18 @@
 package me.cps.root.server;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import de.dytanic.cloudnet.driver.event.EventListener;
 import de.dytanic.cloudnet.driver.event.events.service.CloudServiceInfoUpdateEvent;
 import de.dytanic.cloudnet.ext.bridge.ServiceInfoSnapshotUtil;
 
+/**
+ * Curious Productions Root
+ * Server Manager - Cloud Service Info Update Handler
+ *
+ * Listens for, and handles when a server gets more players and when a server posts it's version.
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-05-07
+ */
 public class CloudServiceInfoUpdateHandler{
 
     @EventListener

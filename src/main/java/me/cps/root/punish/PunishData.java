@@ -1,12 +1,14 @@
 package me.cps.root.punish;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
+/**
+ * Curious Productions Root
+ * Punish Manager - Punish Data
+ *
+ * Base class that is used when receiving and creating punish entries.
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-05-10
+ */
 public class PunishData {
 
     private String punishmentId;

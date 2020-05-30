@@ -1,18 +1,20 @@
 package me.cps.root.staff;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-//things like game manager and hub should listen for these events and handle the event individually
-
+/**
+ * Curious Productions Root
+ * Staff Hub
+ *
+ * Event that fires when a staff member toggles a Staff Mode Option (e.g. vanish)
+ * NOTICE: things like game manager and hub should listen for these events and handle the event individually
+ *
+ * @author  Gabriella Hotten
+ * @version 1.2
+ * @since   2020-04-11
+ */
 public class StaffOptionUpdateEvent extends Event {
 
     private Player player;

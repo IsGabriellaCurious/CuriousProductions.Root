@@ -1,14 +1,8 @@
 package me.cps.root.scoreboard;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
-import me.cps.root.Rank;
-import me.cps.root.cpsModule;
+import me.cps.root.util.Rank;
+import me.cps.root.util.cpsModule;
+import me.cps.root.disguise.DisguiseManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,13 +10,28 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.NameTagVisibility;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import java.util.HashMap;
-import java.util.Map;
 
+/**
+ * Curious Productions Root
+ * Scoreboard Centre
+ *
+ * Handles all the prefixes, suffixes and scoreboards for CPS!
+ * TODO: rewrite this entire system because it's kina confusing and I really don't like it
+ *
+ * @author  Gabriella Hotten
+ * @version 1.5
+ * @since   2020-04-09
+ */
 public class ScoreboardCentre extends cpsModule {
+
+    public enum UpdateAction {
+        CREATE, UPDATE, BEGONETHOT
+    }
 
     private static ScoreboardCentre instance;
 
@@ -62,8 +71,8 @@ public class ScoreboardCentre extends cpsModule {
     public void onJoin(PlayerJoinEvent event) {
         cpsScoreboard scoreboard = new cpsScoreboard(event.getPlayer());
 
-        updatePrefixes();
-        setPrefix(event.getPlayer(), null);
+        updatePrefixes(UpdateAction.CREATE);
+        setPrefix(event.getPlayer(), null, UpdateAction.CREATE);
 
         updateSuffixes();
 
@@ -91,14 +100,21 @@ public class ScoreboardCentre extends cpsModule {
         s.clearCacheOnNext();
     }
 
-    public void updatePrefixes() {
+    public void updatePrefixes(UpdateAction action) {
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-            setPrefix(player, getPrefixes().get(player));
+            setPrefix(player, getPrefixes().get(player), action);
         }
     }
 
-    public void setPrefix(Player player, String prefix) {
+    public void setPrefix(Player player, String prefix, UpdateAction action) {
+        boolean disguise = DisguiseManager.getInstance().getDisguised().containsKey(player.getName());
         Rank rank =  Rank.getRank(player.getUniqueId());
+
+        if (disguise)
+            rank = DisguiseManager.getInstance().getDisguisedRank().get(player.getName());
+
+        System.out.println(disguise);
+
         if (prefix == null)
             prefix = rank.getPrefix();
 
@@ -106,21 +122,38 @@ public class ScoreboardCentre extends cpsModule {
             Scoreboard sc = s.getScoreboard();
 
             String teamName = rank.getLevel() + "APL" /*stands for  A PLAYER. e.g. npcs will be BNPC*/ + player.getEntityId();
-            Team team = null;
             if (sc.getTeam(teamName) == null) {
                 sc.registerNewTeam(teamName);
-                team = sc.getTeam(teamName);
-                team.addEntry(player.getName());
-            } else
-                team = sc.getTeam(teamName);
-
+            }
+            Team team = sc.getTeam(teamName);
             team.setPrefix(prefix);
+            team.setNameTagVisibility(NameTagVisibility.ALWAYS);
+
+            switch (action) {
+                case CREATE:
+                    team.addEntry(player.getName());
+                    if (disguise)
+                        team.addEntry(DisguiseManager.getInstance().getDisguised().get(player.getName()));
+                    break;
+                case UPDATE:
+                    team.unregister();
+                    sc.registerNewTeam(teamName);
+                    team = sc.getTeam(teamName);
+                    team.setPrefix(prefix);
+                    team.setNameTagVisibility(NameTagVisibility.ALWAYS);
+                    team.addEntry(player.getName());
+                    if (disguise)
+                        team.addEntry(DisguiseManager.getInstance().getDisguised().get(player.getName()));
+                    break;
+                case BEGONETHOT:
+                    team.unregister();
+                    break;
+            }
 
             if (getPrefixes().containsKey(player))
                 getPrefixes().remove(player);
 
             getPrefixes().put(player, prefix);
-            //team.addEntry(player.getName());
         }
 
     }

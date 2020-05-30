@@ -1,12 +1,21 @@
 package me.cps.root.command;
 
-import me.cps.root.Rank;
-import me.cps.root.cpsModule;
+import me.cps.root.util.Rank;
+import me.cps.root.util.cpsModule;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Curious Productions Root
+ * Command Hub - cpsCommand (Abstract)
+ *
+ * This is what all CPS command extend and use to function.
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-04-03
+ */
 public abstract class cpsCommand<cpsPlugin extends cpsModule> {
 
     private String command; //the command /<this>
@@ -21,7 +30,7 @@ public abstract class cpsCommand<cpsPlugin extends cpsModule> {
         this.aliases = Arrays.asList(aliases);
     }
 
-    public abstract void execute(Player caller, String[] args); //this will be needed when extending this class. caller is the person who ran the cmd, args is their arguments put in.
+    public abstract void execute(Player player, String[] args); //this will be needed when extending this class. caller is the person who ran the cmd, args is their arguments put in.
 
     public String getCommand() {
         return command;

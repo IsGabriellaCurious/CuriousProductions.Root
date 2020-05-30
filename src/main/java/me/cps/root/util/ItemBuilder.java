@@ -1,12 +1,5 @@
 package me.cps.root.util;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -15,10 +8,18 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 
-public class ItemBuilder
-{
-    public static ItemStack buildWithEnchant(Material material, int amount, short s, Enchantment enchantment, int modifier)
-    {
+/**
+ * Curious Productions Root
+ * CPS Utilities - Item Builder
+ *
+ * Handles the building of items
+ *
+ * @author  Gabriella Hotten
+ * @version 1.0
+ * @since   2020-05-12
+ */
+public class ItemBuilder {
+    public static ItemStack buildWithEnchant(Material material, int amount, short s, Enchantment enchantment, int modifier) {
         ItemStack itemStack = new ItemStack(material, amount, s);
         ItemMeta itemMeta =  itemStack.getItemMeta();
 

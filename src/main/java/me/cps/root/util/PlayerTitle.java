@@ -1,12 +1,5 @@
 package me.cps.root.util;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.EnumWrappers;
@@ -19,8 +12,22 @@ import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+/**
+ * Curious Productions Root
+ * CPS Utilities - Player Titles
+ *
+ * Handles the sending of Titles
+ *
+ * @author  Gabriella Hotten
+ * @version 1.1
+ * @since   2020-04-10
+ */
 public class PlayerTitle {
 
+    /**
+     * @deprecated Does not work, don't use.
+     */
+    @Deprecated
     public static void allNew(String top, String bottom, int fadeIn, int stay, int fadeOut) {
         PacketContainer title = new PacketContainer(PacketType.Play.Server.TITLE);
         PacketContainer subtitle = new PacketContainer(PacketType.Play.Server.TITLE);

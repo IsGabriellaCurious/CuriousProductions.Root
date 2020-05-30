@@ -1,16 +1,18 @@
 package me.cps.root.staff;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
+/**
+ * Curious Productions Root
+ * Staff Hub - Staff Mode Update Event
+ *
+ * Event that fires when a staff members toggles in and out of staff mode.
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-04-11
+ */
 public class StaffModeUpdateEvent extends Event {
 
     private Player player;

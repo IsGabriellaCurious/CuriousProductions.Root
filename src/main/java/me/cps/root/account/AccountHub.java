@@ -1,18 +1,11 @@
 package me.cps.root.account;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
-import me.cps.root.Rank;
+import me.cps.root.networkdata.NetworkDataHub;
+import me.cps.root.util.Rank;
 import me.cps.root.account.commands.SetRankCommand;
-import me.cps.root.cpsModule;
+import me.cps.root.util.cpsModule;
 import me.cps.root.redis.RedisHub;
 import me.cps.root.util.Message;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -24,6 +17,17 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.UUID;
 
+/**
+ * Curious Productions Root
+ * Account Hub
+ *
+ * Account Hub manages everything MySQL based.
+ * This includes ranks, usernames, uuids, server lockdowns, etc.
+ *
+ * @author  Gabriella Hotten
+ * @version 1.2
+ * @since   2020-04-03
+ */
 public class AccountHub extends cpsModule {
 
     /*
@@ -50,13 +54,13 @@ public class AccountHub extends cpsModule {
     private String database;
     private int port;
 
-    public AccountHub(JavaPlugin plugin, String h, String u, String pw, String db, int p) {
+    public AccountHub(JavaPlugin plugin) {
         super("Account Hub", plugin, "1.2", true);
-        this.host = h;
-        this.username = u;
-        this.password = pw;
-        this.database = db;
-        this.port = p;
+        this.host = NetworkDataHub.getNetworkDataBase().getMysqlUrl();
+        this.username = NetworkDataHub.getNetworkDataBase().getMysqlUser();
+        this.password = NetworkDataHub.getNetworkDataBase().getMysqlPw();
+        this.database = NetworkDataHub.getNetworkDataBase().getMysqlDb();
+        this.port = NetworkDataHub.getNetworkDataBase().getMysqlPort();
         registerSelf();
         players = new HashMap<>();
         instance = this;

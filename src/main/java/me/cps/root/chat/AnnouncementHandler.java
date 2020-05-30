@@ -1,18 +1,20 @@
 package me.cps.root.chat;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import de.dytanic.cloudnet.driver.event.EventListener;
 import de.dytanic.cloudnet.driver.event.events.channel.ChannelMessageReceiveEvent;
 import me.cps.root.server.ServerManager;
 import me.cps.root.util.Message;
 import me.cps.root.util.PlayerTitle;
 
+/**
+ * Curious Productions Root
+ * Chat Hub - Announcement Handler
+ *
+ * Listens for, then handles announcements by broadcasting them to the server.
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-05-08
+ */
 public class AnnouncementHandler {
 
     @EventListener

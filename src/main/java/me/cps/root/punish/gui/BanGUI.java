@@ -1,12 +1,5 @@
 package me.cps.root.punish.gui;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import me.cps.root.punish.PunishData;
 import me.cps.root.punish.PunishManager;
 import me.cps.root.punish.PunishType;
@@ -26,6 +19,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 
+/**
+ * Curious Productions Root
+ * Punish Manager - Ban GUI
+ *
+ * Handles the opening of the Ban menu.
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-05-10
+ */
 public class BanGUI {
 
     public static void openGUI(Player player, PunishData data) {

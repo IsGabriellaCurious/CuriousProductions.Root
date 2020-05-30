@@ -1,12 +1,5 @@
 package me.cps.root.punish.command;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import me.cps.root.account.AccountHub;
 import me.cps.root.punish.PunishDuration;
 import me.cps.root.punish.PunishManager;
@@ -17,6 +10,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
+/**
+ * Curious Productions Root
+ * Punish Manager - Console Punish Command
+ *
+ * A neat little command for AAC to use when banning cheaters.
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-05-09
+ */
 public class ConsolePunishCommand implements CommandExecutor {
 
     @Override

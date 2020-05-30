@@ -1,15 +1,8 @@
 package me.cps.root.command;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
-import me.cps.root.Rank;
+import me.cps.root.util.Rank;
 import me.cps.root.command.commands.ModulesEnabledCommand;
-import me.cps.root.cpsModule;
+import me.cps.root.util.cpsModule;
 import me.cps.root.util.CPSProtocol;
 import me.cps.root.util.Message;
 import me.cps.root.util.PerMilliRunnable;
@@ -23,6 +16,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Curious Productions Root
+ * Command Hub
+ *
+ * Command Hub manages all server commands that are related to CPS plugins.
+ *
+ * @author  Gabriella Hotten
+ * @version 1.0
+ * @since   2020-04-03
+ */
 public class CommandHub extends cpsModule {
 
     private HashMap<String, cpsCommand> registeredCommands; //useable commands, command hub will use this to check if the command exists.

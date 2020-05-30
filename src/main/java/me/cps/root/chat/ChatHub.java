@@ -1,18 +1,12 @@
 package me.cps.root.chat;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import de.dytanic.cloudnet.common.document.gson.JsonDocument;
 import de.dytanic.cloudnet.driver.CloudNetDriver;
 import de.dytanic.cloudnet.wrapper.Wrapper;
-import me.cps.root.Rank;
+import me.cps.root.util.Rank;
 import me.cps.root.chat.commands.AnnounceCommand;
-import me.cps.root.cpsModule;
+import me.cps.root.util.cpsModule;
+import me.cps.root.disguise.DisguiseManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -20,22 +14,30 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Curious Productions Root
+ * Chat Hub
+ *
+ * Chat Hub manages all server and global chat messages.
+ * Global chat is powered through CloudNet v3
+ *
+ * @author  Gabriella Hotten
+ * @version 1.3
+ * @since   2020-04-03
+ */
 public class ChatHub extends cpsModule {
 
-    private Rank globalPrefix; //this was one of my whims when first testing.
     private static ChatHub instance;
 
     private boolean globalchat;
 
     public ChatHub(JavaPlugin plugin, boolean globalChat) {
-        super("Chat Hub", plugin, "1.0-beta", false);
+        super("Chat Hub", plugin, "1.3", false);
         instance = this;
         registerSelf();
         this.globalchat = globalChat;
         CloudNetDriver.getInstance().getEventManager().registerListener(new GlobalChatMessageRecievedHandler());
         CloudNetDriver.getInstance().getEventManager().registerListener(new AnnouncementHandler());
-        //globalPrefix = Rank.DEFAULT;
-        //registerCommand(new GlobalPrefixCommand(this));
         registerCommand(new AnnounceCommand(this));
     }
 
@@ -43,9 +45,6 @@ public class ChatHub extends cpsModule {
         return instance;
     }
 
-    public void setGlobalPrefix(Rank globalPrefix) {
-        this.globalPrefix = globalPrefix;
-    }
 
     public boolean isGlobalchat() {
         return globalchat;
@@ -59,6 +58,16 @@ public class ChatHub extends cpsModule {
         event.setCancelled(true); //now there is a better way of doing all this (e.g. reformatting the message, etc), but for my easy im just redoing the whole thing.
                                  //also makes disguise integration easier later, so that's a plus.
 
+
+        if (DisguiseManager.getInstance().getDisguised().containsKey(event.getPlayer().getName())) {
+            String name = DisguiseManager.getInstance().getDisguised().get(event.getPlayer().getName());
+            Rank rank = DisguiseManager.getInstance().getDisguisedRank().get(event.getPlayer().getName());
+
+            Bukkit.broadcastMessage(formatChatMessage(name, rank, event.getMessage()));
+            if (globalchat)
+                sendGlobalChatMessage(name, rank, event.getMessage());
+            return;
+        }
         Bukkit.broadcastMessage(formatChatMessage(event.getPlayer(), event.getMessage()));
         if (globalchat)
             sendGlobalChatMessage(event.getPlayer().getName(), Rank.getRank(event.getPlayer().getUniqueId()), event.getMessage());

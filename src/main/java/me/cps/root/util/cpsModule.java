@@ -1,11 +1,4 @@
-package me.cps.root;
-
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
+package me.cps.root.util;
 
 import me.cps.root.command.CommandHub;
 import me.cps.root.command.cpsCommand;
@@ -13,6 +6,16 @@ import me.cps.root.util.Message;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Curious Productions Root
+ * CPS Utilities - cpsModule Extension
+ *
+ * Extension class for all CPS modules.
+ *
+ * @author  Gabriella Hotten
+ * @version 1.0
+ * @since   2020-04-03
+ */
 public abstract class cpsModule implements Listener {
 
     String moduleName = "NOT SET"; //name of the module (for example what will be found in the /listmodules command

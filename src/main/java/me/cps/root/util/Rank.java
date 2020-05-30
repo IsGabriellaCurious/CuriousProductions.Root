@@ -1,10 +1,21 @@
-package me.cps.root;
+package me.cps.root.util;
 
 import me.cps.root.account.AccountHub;
 import org.bukkit.ChatColor;
 
 import java.util.UUID;
 
+/**
+ * Curious Productions Root
+ * CPS Utilities - Rank Enum
+ *
+ * Holds all the available ranks.
+ * TODO: remove all the IA shit
+ *
+ * @author  Gabriella Hotten
+ * @version 1.0
+ * @since   2020-04-03
+ */
 public enum Rank {
 
     OWNERHC("Ex-IA High Command", ChatColor.LIGHT_PURPLE, "[IA HC]", true),
@@ -24,7 +35,8 @@ public enum Rank {
     IAMIDVET("Ex-IA Mid Rank", ChatColor.DARK_BLUE, "[IA MR]", false),
     IAVET("IA Veteran", ChatColor.DARK_BLUE, "[IA VET]", false),
 
-    FAMOUS("VIP", ChatColor.LIGHT_PURPLE, "[VIP]", true),
+    VIP("VIP", ChatColor.LIGHT_PURPLE, "[VIP]", true),
+    BUILDER("Builder", ChatColor.LIGHT_PURPLE, "[BUILDER]", false),
 
     DONATORPLUS("Donator+", ChatColor.DARK_AQUA, "[DONATOR+]", false),
     DONATOR("Donator", ChatColor.GOLD, "[DONATOR]", false),
@@ -106,12 +118,14 @@ public enum Rank {
                 return "A";
             case IAVET:
                 return "B";
-            case FAMOUS:
+            case VIP:
                 return "C";
-            case DONATORPLUS:
+            case BUILDER:
                 return "D";
-            case DONATOR:
+            case DONATORPLUS:
                 return "E";
+            case DONATOR:
+                return "F";
             case DEFAULT:
                 return "Z";
             default:

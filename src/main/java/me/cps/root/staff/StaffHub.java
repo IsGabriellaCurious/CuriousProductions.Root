@@ -1,20 +1,11 @@
 package me.cps.root.staff;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
-import me.cps.root.Rank;
-import me.cps.root.cpsModule;
+import me.cps.root.util.Rank;
+import me.cps.root.util.cpsModule;
 import me.cps.root.redis.RedisHub;
 import me.cps.root.scoreboard.ScoreboardCentre;
-import me.cps.root.scoreboard.cpsScoreboard;
 import me.cps.root.staff.commands.StaffModeCommand;
 import me.cps.root.staff.commands.ToggleGameChatCommand;
-import me.cps.root.staff.commands.ToggleGameReviewCommand;
 import me.cps.root.staff.commands.VanishCommand;
 import me.cps.root.util.Message;
 import org.bukkit.Bukkit;
@@ -28,6 +19,17 @@ import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
 
+/**
+ * Curious Productions Root
+ * Staff Hub
+ *
+ * Handles Staff Mode (incl vanish)
+ * TODO: clean up this code a bit
+ *
+ * @author  Gabriella Hotten
+ * @version 1.2
+ * @since   2020-04-11
+ */
 public class StaffHub extends cpsModule {
 
     private static StaffHub instance;

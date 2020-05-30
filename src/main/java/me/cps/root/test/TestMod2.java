@@ -1,15 +1,18 @@
 package me.cps.root.test;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
-import me.cps.root.cpsModule;
+import me.cps.root.util.cpsModule;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Curious Productions Root
+ * Test Mod 2
+ *
+ * Removed: 2020-04-05
+ *
+ * @author  Gabriella Hotten
+ * @version 1.0-alpha
+ * @since   2020-04-11
+ */
 public class TestMod2 extends cpsModule {
 
     public TestMod2(JavaPlugin plugin) {

@@ -1,12 +1,5 @@
 package me.cps.root.util;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -19,6 +12,16 @@ this is so you can check for things like state changes to check for a game to en
 
  */
 
+/**
+ * Curious Productions Root
+ * CPS Utilities - Per Milli Event
+ *
+ * Event that fires every 1 tick.
+ *
+ * @author  Gabriella Hotten
+ * @version 1.0
+ * @since   2020-04-07
+ */
 public class PerMilliEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();

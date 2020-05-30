@@ -1,15 +1,18 @@
 package me.cps.root.util;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Curious Productions Root
+ * CPS Utilities - Per Milli Runnable
+ *
+ * Runnable that fires an event every 1 tick.
+ *
+ * @author  Gabriella Hotten
+ * @version 1.0
+ * @since   2020-04-07
+ */
 public class PerMilliRunnable implements Runnable {
 
     private JavaPlugin plugin;

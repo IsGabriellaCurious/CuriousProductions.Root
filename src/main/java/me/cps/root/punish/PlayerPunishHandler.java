@@ -1,16 +1,9 @@
 package me.cps.root.punish;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import de.dytanic.cloudnet.driver.event.EventListener;
 import de.dytanic.cloudnet.driver.event.events.channel.ChannelMessageReceiveEvent;
 import de.dytanic.cloudnet.ext.bridge.BridgePlayerManager;
-import me.cps.root.Rank;
+import me.cps.root.util.Rank;
 import me.cps.root.account.AccountHub;
 import me.cps.root.util.Message;
 import me.cps.root.util.center.Centered;
@@ -19,6 +12,15 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
+/**
+ * Curious Productions Root
+ * Punish Manager - Player Punish Handler
+ *
+ * Handles the informing/removing the player when they are punished (cross server)
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-05-09
+ */
 public class PlayerPunishHandler {
 
     @EventListener

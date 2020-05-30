@@ -1,18 +1,21 @@
 package me.cps.root.staff.commands;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
-import me.cps.root.Rank;
+import me.cps.root.util.Rank;
 import me.cps.root.command.cpsCommand;
 import me.cps.root.staff.StaffHub;
-import me.cps.root.staff.StaffOptions;
 import org.bukkit.entity.Player;
 
+/**
+ * Curious Productions Root
+ * Staff Hub - Toggle Game Review Command
+ *
+ * Removed: 2020-04-13
+ * Reason: It's a bit of dumb command. It was replaced by just being in staff mode.
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-04-11
+ */
+@Deprecated
 public class ToggleGameReviewCommand extends cpsCommand<StaffHub> {
 
     public ToggleGameReviewCommand(StaffHub mod) {

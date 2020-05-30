@@ -1,18 +1,20 @@
 package me.cps.root.staff.commands;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
-import me.cps.root.Rank;
+import me.cps.root.util.Rank;
 import me.cps.root.command.cpsCommand;
 import me.cps.root.staff.StaffHub;
 import me.cps.root.staff.StaffOptions;
 import org.bukkit.entity.Player;
 
+/**
+ * Curious Productions Root
+ * Staff Hub - Toggle Chat Chat Command
+ *
+ * Handles the toggling of game chat (used inside of CPS Game Manager based games)
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-04-11
+ */
 public class ToggleGameChatCommand extends cpsCommand<StaffHub> {
 
     public ToggleGameChatCommand(StaffHub mod) {

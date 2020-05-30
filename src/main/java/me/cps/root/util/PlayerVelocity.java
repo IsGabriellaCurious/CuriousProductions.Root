@@ -1,15 +1,18 @@
 package me.cps.root.util;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+/**
+ * Curious Productions Root
+ * CPS Utilities - Player Velocity
+ *
+ * Handles the custom velocity of a player.
+ *
+ * @author  Gabriella Hotten
+ * @version 1.0
+ * @since   2020-04-10
+ */
 public class PlayerVelocity {
 
     public static void velocityFrom(Player player, Player from, int multiplier) {

@@ -1,12 +1,14 @@
 package me.cps.root.punish;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
+/**
+ * Curious Productions Root
+ * Punish Manager - Punish Duration Enum
+ *
+ * Types of duration a player can receive on their punishment.
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-05-09
+ */
 public enum PunishDuration {
 
     PERMANENT(-1, "Permanent"),

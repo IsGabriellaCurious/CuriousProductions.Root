@@ -1,20 +1,13 @@
 package me.cps.root.server;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import de.dytanic.cloudnet.common.document.gson.JsonDocument;
 import de.dytanic.cloudnet.driver.CloudNetDriver;
 import de.dytanic.cloudnet.driver.service.ServiceId;
 import de.dytanic.cloudnet.driver.service.ServiceInfoSnapshot;
 import de.dytanic.cloudnet.driver.service.ServiceTask;
 import de.dytanic.cloudnet.wrapper.Wrapper;
-import me.cps.root.Rank;
-import me.cps.root.cpsModule;
+import me.cps.root.util.Rank;
+import me.cps.root.util.cpsModule;
 import me.cps.root.redis.RedisHub;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -24,6 +17,16 @@ import redis.clients.jedis.Jedis;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Curious Productions Root
+ * Server Manager
+ *
+ * Handles all server information inside of Redis
+ *
+ * @author  Gabriella Hotten
+ * @version 1.0
+ * @since   2020-05-07
+ */
 public class ServerManager extends cpsModule {
 
     private static ServerManager instance;
@@ -37,7 +40,7 @@ public class ServerManager extends cpsModule {
     private static final CloudNetDriver DRIVER = CloudNetDriver.getInstance();
 
     public ServerManager(JavaPlugin plugin, boolean ssum) {
-        super("Server Manager", plugin, "1.0-alpha", true);
+        super("Server Manager", plugin, "1.0", true);
         CloudNetDriver.getInstance().getEventManager().registerListener(new CloudServiceInfoUpdateHandler());
         instance = this;
         serviceId = Wrapper.getInstance().getServiceId();

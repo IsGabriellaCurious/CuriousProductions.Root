@@ -1,17 +1,10 @@
 package me.cps.root.proxy;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import de.dytanic.cloudnet.driver.CloudNetDriver;
 import de.dytanic.cloudnet.ext.bridge.BridgePlayerManager;
 import de.dytanic.cloudnet.ext.bridge.player.ICloudPlayer;
-import me.cps.root.Rank;
-import me.cps.root.cpsModule;
+import me.cps.root.util.Rank;
+import me.cps.root.util.cpsModule;
 import me.cps.root.proxy.command.HubCommand;
 import me.cps.root.proxy.command.ServerCommand;
 import me.cps.root.redis.RedisHub;
@@ -22,12 +15,22 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import redis.clients.jedis.Jedis;
 
+/**
+ * Curious Productions Root
+ * Proxy Manager
+ *
+ * Handles the switching of servers.
+ *
+ * @author  Gabriella Hotten
+ * @version 1.1
+ * @since   2020-04-08
+ */
 public class ProxyManager extends cpsModule {
 
     private static ProxyManager instance;
 
     public ProxyManager(JavaPlugin plugin) {
-        super("Proxy Manager", plugin, "1.1-beta", true);
+        super("Proxy Manager", plugin, "1.1", true);
         instance = this;
         registerCommand(new ServerCommand(this));
         registerCommand(new HubCommand(this));

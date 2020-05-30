@@ -1,12 +1,5 @@
 package me.cps.root.util;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
@@ -14,6 +7,17 @@ import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * Curious Productions Root
+ * CPS Utilities - CPS Protocol
+ *
+ * Handles the sending of Protocol Lib Packets
+ * NOTICE: I don't recall this ever being properly used. (apart from attempts with titles)
+ *
+ * @author  Gabriella Hotten
+ * @version 1.0
+ * @since   2020-05-10
+ */
 public class CPSProtocol {
 
     public static ProtocolManager protocolManager;

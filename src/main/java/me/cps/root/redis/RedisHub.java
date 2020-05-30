@@ -1,23 +1,26 @@
 package me.cps.root.redis;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import de.dytanic.cloudnet.driver.service.ServiceId;
 import de.dytanic.cloudnet.wrapper.Wrapper;
-import me.cps.root.Rank;
-import me.cps.root.cpsModule;
+import me.cps.root.networkdata.NetworkDataHub;
+import me.cps.root.util.Rank;
+import me.cps.root.util.cpsModule;
 import me.cps.root.util.Message;
-import org.bukkit.event.EventHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+/**
+ * Curious Productions Root
+ * Redis Hub
+ *
+ * Handles everything redis! Mainly server configurations.
+ *
+ * @author  Gabriella Hotten
+ * @version 1.3
+ * @since   2020-04-07
+ */
 public class RedisHub extends cpsModule {
 
     /*
@@ -49,23 +52,23 @@ public class RedisHub extends cpsModule {
     public boolean gameServer;
 
     //when the server config params are entered, they act only as a default. redis has ultimate control over the server config.
-    public RedisHub(JavaPlugin plugin, String password /* password to be left null if one is not needed */, Rank rankRequired, int maxPlayers, boolean donatorPriority, boolean gameServer) {
-        super("Redis Hub", plugin, "1.0-alpha", true);
+    public RedisHub(JavaPlugin plugin, Rank rankRequired, int maxPlayers, boolean donatorPriority, boolean gameServer) {
+        super("Redis Hub", plugin, "1.3", true);
         instance = this;
 
         serviceId = Wrapper.getInstance().getServiceId();
 
-        this.password = password;
+        this.password = NetworkDataHub.getNetworkDataBase().getRedisPw();
         this.rankRequired = rankRequired;
         this.maxPlayers = maxPlayers;
         this.donatorPriority = donatorPriority;
         this.gameServer = gameServer;
-        if (password == null)
+        if (password == null || password.equals("") || password.equals("null"))
             pwRequired = false;
         else
             pwRequired = true;
 
-        pool = new JedisPool(new JedisPoolConfig(), "localhost", 6379);
+        pool = new JedisPool(new JedisPoolConfig(), NetworkDataHub.getNetworkDataBase().getRedisUrl(), NetworkDataHub.getNetworkDataBase().getRedisPort());
         //pool.getResource().select(13); //CPS will be using DB13 //OK THAT DOESN'T WORK, IT DOES TO DB0
 
         initServer();

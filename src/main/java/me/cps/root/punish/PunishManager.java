@@ -1,21 +1,13 @@
 package me.cps.root.punish;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import de.dytanic.cloudnet.common.document.gson.JsonDocument;
 import de.dytanic.cloudnet.driver.CloudNetDriver;
 import me.cps.root.account.AccountHub;
-import me.cps.root.cpsModule;
+import me.cps.root.util.cpsModule;
 import me.cps.root.punish.command.ConsolePunishCommand;
 import me.cps.root.punish.command.PunishCommand;
 import me.cps.root.punish.gui.BanGUI;
 import me.cps.root.punish.gui.DurationGUI;
-import me.cps.root.punish.gui.PunishGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,6 +23,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+/**
+ * Curious Productions Root
+ * Punish Manager
+ *
+ * Handles the banning, muting and warning of players who break the rules.
+ * NOTICE: This only handles bans at the moment.
+ *
+ * @author  Gabriella Hotten
+ * @version 1.1-beta
+ * @since   2020-05-09
+ */
 public class PunishManager extends cpsModule {
 
     private static PunishManager instance;
@@ -40,7 +43,7 @@ public class PunishManager extends cpsModule {
     private HashMap<Player, PunishData> settingReason = new HashMap<>();
 
     public PunishManager(JavaPlugin plugin, boolean register18) {
-        super("Punish Manager", plugin, "1.0-alpha", true);
+        super("Punish Manager", plugin, "1.1-beta", true);
         instance = this;
         CloudNetDriver.getInstance().getEventManager().registerListener(new PlayerPunishHandler());
         registerSelf();

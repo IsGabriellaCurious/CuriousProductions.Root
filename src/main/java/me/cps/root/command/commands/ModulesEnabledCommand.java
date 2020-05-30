@@ -1,21 +1,23 @@
 package me.cps.root.command.commands;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
-import me.cps.root.Rank;
+import me.cps.root.util.Rank;
 import me.cps.root.command.CommandHub;
 import me.cps.root.command.cpsCommand;
-import me.cps.root.cpsModule;
+import me.cps.root.util.cpsModule;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
+/**
+ * Curious Productions Root
+ * Command Hub - Modules Enabled Command
+ *
+ * Sends a list of all CPS modules that are enabled.
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-04-03
+ */
 public class ModulesEnabledCommand extends cpsCommand<CommandHub> {
 
     public ModulesEnabledCommand(CommandHub mod) {

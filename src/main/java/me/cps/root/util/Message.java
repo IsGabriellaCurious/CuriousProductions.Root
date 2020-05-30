@@ -1,17 +1,18 @@
 package me.cps.root.util;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
-import me.cps.root.Rank;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+/**
+ * Curious Productions Root
+ * CPS Utilities - Message
+ *
+ * Handles most message types (such as broadcasts, console messages, string[] combines, etc)
+ *
+ * @author  Gabriella Hotten
+ * @version 1.2
+ * @since   2020-04-07
+ */
 public class Message {
 
     public static void console(String message) {

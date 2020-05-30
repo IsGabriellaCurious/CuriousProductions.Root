@@ -1,15 +1,18 @@
 package me.cps.root.util.center;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+/**
+ * Curious Productions Root
+ * CPS Utilities - Centered Chat
+ *
+ * Handles the sending of centered chat messages
+ *
+ * @author  SirSpoodles (https://www.spigotmc.org/members/sirspoodles.109063/)
+ * @version 1.0
+ * @since   2020-04-25
+ */
 public class Centered {
 
     private final static int CENTER_PX = 154;

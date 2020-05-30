@@ -1,18 +1,19 @@
 package me.cps.root.account.commands;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
-import me.cps.root.Rank;
+import me.cps.root.util.Rank;
 import me.cps.root.account.AccountHub;
 import me.cps.root.command.cpsCommand;
-import me.cps.root.cpsModule;
 import org.bukkit.entity.Player;
 
+/**
+ * Curious Productions Root
+ * Account Hub - SetRank command
+ *
+ * Handles the setting of a player's rank.
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-04-07
+ */
 public class SetRankCommand extends cpsCommand<AccountHub> {
 
     public SetRankCommand(AccountHub mod) {

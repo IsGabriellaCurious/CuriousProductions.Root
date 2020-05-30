@@ -1,12 +1,5 @@
 package me.cps.root.punish;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
 import me.cps.root.account.AccountHub;
 import me.cps.root.punish.gui.BanGUI;
 import me.cps.root.punish.gui.DurationGUI;
@@ -22,6 +15,16 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Curious Productions Root
+ * Punish Manager - Punish GUI Handlers (1.8)
+ *
+ * Handles all the clicking inside the punish GUIs
+ * TODO redo this code, i really hate it
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-05-10
+ */
 public class PunishInventoryHandlers18 implements Listener {
 
     //Punish GUI

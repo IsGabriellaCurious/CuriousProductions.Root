@@ -1,13 +1,6 @@
 package me.cps.root.punish.command;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
-import me.cps.root.Rank;
+import me.cps.root.util.Rank;
 import me.cps.root.account.AccountHub;
 import me.cps.root.command.cpsCommand;
 import me.cps.root.punish.PunishData;
@@ -17,6 +10,15 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
+/**
+ * Curious Productions Root
+ * Punish Manager - Punish Command
+ *
+ * Opens the punish GUI.
+ *
+ * @author  Gabriella Hotten
+ * @since   2020-05-09
+ */
 public class PunishCommand extends cpsCommand<PunishManager> {
 
     public PunishCommand(PunishManager mod) {

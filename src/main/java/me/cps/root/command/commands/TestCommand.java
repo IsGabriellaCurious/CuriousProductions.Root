@@ -1,24 +1,22 @@
 package me.cps.root.command.commands;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
-import me.cps.root.Rank;
+import me.cps.root.util.Rank;
 import me.cps.root.command.cpsCommand;
-import me.cps.root.cpsModule;
+import me.cps.root.util.cpsModule;
 import org.bukkit.entity.Player;
 
-/*
-COMMAND NO LONGER USED. (disabled)
-
-* REMOVED 04/04/20
-* REASON: this was the first test command, also throws a nasty error when no args are used.
+/**
+ * Curious Productions Root
+ * Command Hub - Test Command
+ *
+ * Removed: 2020-04-04
+ * Reason: First ever command, and it throw an error when no args.
+ *
+ * @author     Gabriella Hotten
+ * @since      2020-04-03
+ * @deprecated Command removed
  */
-
+@Deprecated
 public class TestCommand extends cpsCommand {
 
     public TestCommand(cpsModule mod) {

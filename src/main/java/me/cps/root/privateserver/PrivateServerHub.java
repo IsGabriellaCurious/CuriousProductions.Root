@@ -1,19 +1,23 @@
 package me.cps.root.privateserver;
 
-/*
-Hi there! Pls no stealing, unless you were given express
-permission to read this. if not, fuck off :)
-
-Copyright (c) IsGeorgeCurious 2020
-*/
-
-import me.cps.root.cpsModule;
+import me.cps.root.util.cpsModule;
 import me.cps.root.redis.RedisHub;
 import org.bukkit.plugin.java.JavaPlugin;
 import redis.clients.jedis.Jedis;
 
 import java.util.UUID;
 
+/**
+ * Curious Productions Root
+ * Private Server Hub
+ *
+ * A fancy place for players to hang out with their friends!
+ * NOTICE: THIS IS IN ALPHA AND SHOULD **NOT** BE USED.
+ *
+ * @author  Gabriella Hotten
+ * @version 1.0-alpha
+ * @since   2020-05-11
+ */
 public class PrivateServerHub extends cpsModule
 {
     private static PrivateServerHub instance;
