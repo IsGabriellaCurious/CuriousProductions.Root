@@ -207,6 +207,14 @@ public class StaffHub extends cpsModule {
         setOption(StaffOptions.GameReview, toggle, override, staff);
         staff.sendMessage(prefix + "§7Game Review: " + (toggle ? "§aEnabled" : "§cDisabled"));
     }*/
+    
+    public boolean forceIsInStaffMode(String player) {
+        try (Jedis jedis = RedisHub.getInstance().getPool().getResource()) {
+            String key = "cps.instaffmode";
+
+            return jedis.smembers(key).contains(player.getName());
+        }
+    }
 
 
 }

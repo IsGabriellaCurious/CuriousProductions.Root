@@ -3,6 +3,7 @@ mysqlUser: cps
 mysqlPw: password
 mysqlDb: cps
 mysqlPort: 3306
+mysqlTimezone: "Europe/Paris"
 redisUrl: localhost
 redisPw: null
 redisPort: 6379
@@ -12,4 +13,4 @@ networkSecondaryColour: BLUE
 networkWebsite: cps.me
 networkIp: play.cps.me
 anticheatName: CPS AC
-configVersion: 1.0
+configVersion: 1.1

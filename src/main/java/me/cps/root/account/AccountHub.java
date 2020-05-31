@@ -113,7 +113,7 @@ public class AccountHub extends cpsModule {
 
         synchronized (this) {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.username, this.password); //connection url
+            Connection conn = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database + "?serverTimezone=" + NetworkDataHub.getNetworkDataBase().getMysqlTimezone(), this.username, this.password); //connection url
             return conn;
         }
     }

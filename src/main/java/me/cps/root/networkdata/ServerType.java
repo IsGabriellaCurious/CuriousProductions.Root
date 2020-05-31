@@ -13,7 +13,8 @@ public enum ServerType {
 
     NETWORKCONFIG("https://pastebin.com/raw/0NYhDm8D", "https://github.com/IsGabriellaCurious/CuriousProductions.Root"),
     ROOT("https://pastebin.com/raw/PkFfs3qg", "https://github.com/IsGabriellaCurious/CuriousProductions.Root"),
-    HUB("https://pastebin.com/raw/x5axb8SL", "https://github.com/IsGabriellaCurious/CuriousProductions.Hub");
+    HUB("https://pastebin.com/raw/x5axb8SL", "https://github.com/IsGabriellaCurious/CuriousProductions.Hub"),
+    GAMEMANAGER("https://pastebin.com/raw/ymKuzzzE", "https://github.com/IsGabriellaCurious/CuriousProductions.GameManager");
 
     private String versionUrl;
     private String githubUrl;

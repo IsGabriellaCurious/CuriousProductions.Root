@@ -13,7 +13,7 @@ import org.bukkit.ChatColor;
  */
 public class NetworkDataBase {
 
-    public NetworkDataBase(String mysqlUrl, String mysqlUser, String mysqlPw, String mysqlDb, int mysqlPort,
+    public NetworkDataBase(String mysqlUrl, String mysqlUser, String mysqlPw, String mysqlDb, int mysqlPort, String mysqlTimezone,
                            String redisUrl, String redisPw, int redisPort,
                            String networkName, ChatColor networkPrimaryColour, ChatColor networkSecondaryColour,
                            String networkWebsite, String networkIp, String anicheatName, String configVersion)
@@ -23,6 +23,7 @@ public class NetworkDataBase {
         this.mysqlPw = mysqlPw;
         this.mysqlDb = mysqlDb;
         this.mysqlPort = mysqlPort;
+        this.mysqlTimezone = mysqlTimezone;
 
         this.redisUrl = redisUrl;
         this.redisPw = redisPw;
@@ -44,6 +45,7 @@ public class NetworkDataBase {
     private String mysqlPw;
     private String mysqlDb;
     private int mysqlPort;
+    private String mysqlTimezone;
 
     private String redisUrl;
     private String redisPw;
@@ -62,6 +64,7 @@ public class NetworkDataBase {
     public String getMysqlPw() { return mysqlPw; }
     public String getMysqlDb() { return mysqlDb; }
     public int getMysqlPort() { return mysqlPort; }
+    public String getMysqlTimezone() { return mysqlTimezone; }
     public String getRedisUrl() { return redisUrl; }
     public String getRedisPw() { return redisPw; }
     public int getRedisPort() { return redisPort; }

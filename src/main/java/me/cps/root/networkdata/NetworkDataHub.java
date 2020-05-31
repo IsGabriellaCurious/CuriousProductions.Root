@@ -26,12 +26,17 @@ import java.net.URL;
  */
 public class NetworkDataHub extends cpsModule {
 
+    private static NetworkDataHub instance;
+
     private static NetworkDataBase networkDataBase;
     private String pluginVersion;
     private String networkConfigVersion;
 
+    private String rootVersion = "1.0";
+
     public NetworkDataHub(JavaPlugin plugin) {
         super("Network Data Hub", plugin, "1.0", true);
+        instance = this;
         this.pluginVersion = plugin.getDescription().getVersion();
         parseNetworkData();
         Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(plugin, () -> {
@@ -40,6 +45,8 @@ public class NetworkDataHub extends cpsModule {
         }, 100);
 
     }
+
+    public static NetworkDataHub getInstance() { return instance; }
 
     public static NetworkDataBase getNetworkDataBase() { return networkDataBase; }
 
@@ -55,7 +62,7 @@ public class NetworkDataHub extends cpsModule {
         } catch (Exception e) {
             Message.console("§c§lERROR: §fError parsing network data. Defaults have been applied. Please see error below:");
             e.printStackTrace();
-            networkDataBase = new NetworkDataBase("localhost", "cps", "password", "cps", 3306,
+            networkDataBase = new NetworkDataBase("localhost", "cps", "password", "cps", 3306, "Europe/Paris",
                     "localhost", "", 6379,
                     "CPS", ChatColor.AQUA, ChatColor.BLUE,
                     "cps.me", "play.cps.me", "CPS AC", "1.0");
@@ -74,11 +81,39 @@ public class NetworkDataHub extends cpsModule {
             in.close();
 
             String _localVer = (serverType == ServerType.NETWORKCONFIG ? networkConfigVersion : pluginVersion);
+            if (serverType == ServerType.ROOT)
+                _localVer = rootVersion;
 
             Message.console("Latest version is " + ver);
             Message.console("Our version is " + _localVer);
 
             if (_localVer.equals(ver)) {
+                Message.console("§a" + serverType.toString() + " is up to date!");
+            } else {
+                Message.console("§cWarning! This " + (serverType == ServerType.NETWORKCONFIG ? "config" : "plugin") + " is out of date. Please visit " + serverType.getGithubUrl() + " to get the latest " + (serverType == ServerType.NETWORKCONFIG ? "config file." : "plugin."));
+            }
+
+        } catch (Exception e) {
+            Message.console("§cError checking for updates.");
+            e.printStackTrace();
+        }
+        Message.console("----------------------------------------");
+    }
+
+    public void checkForUpdates(ServerType serverType, String version) {
+        Message.console("----------------------------------------");
+        Message.console("Checking for updates for " + serverType);
+        try {
+            URL url = new URL(serverType.getVersionUrl());
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+            String ver = in.readLine();
+            in.close();
+
+            Message.console("Latest version is " + ver);
+            Message.console("Our version is " + version);
+
+            if (version.equals(ver)) {
                 Message.console("§a" + serverType.toString() + " is up to date!");
             } else {
                 Message.console("§cWarning! This " + (serverType == ServerType.NETWORKCONFIG ? "config" : "plugin") + " is out of date. Please visit " + serverType.getGithubUrl() + " to get the latest " + (serverType == ServerType.NETWORKCONFIG ? "config file." : "plugin."));
